@@ -165,8 +165,8 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-ttyd=y"
     "CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y"
     "CONFIG_PACKAGE_ttyd=y"
-    "CONFIG_PACKAGE_luci-app-homeproxy=y"
-    "CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn=y"
+    #"CONFIG_PACKAGE_luci-app-homeproxy=y"
+    #"CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn=y"
     "CONFIG_PACKAGE_luci-app-ddns-go=y"
     "CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y"
     "CONFIG_PACKAGE_luci-app-argon-config=y"
@@ -196,6 +196,8 @@ provided_config_lines=(
     "CONFIG_PACKAGE_cifsmount=y"
 	"CONFIG_PACKAGE_luci-app-ipsec-server=y"
 	"CONFIG_PACKAGE_luci-app-istorex=y"
+	"CONFIG_PACKAGE_luci-app-openlist2=y"
+    "CONFIG_PACKAGE_luci-i18n-openlist2-zh-cn=y"
 	
 	 
 	
