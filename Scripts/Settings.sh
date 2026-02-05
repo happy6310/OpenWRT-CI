@@ -27,6 +27,14 @@ elif [ -f "$WIFI_UC" ]; then
 	sed -i "s/encryption='.*'/encryption='psk2+ccmp'/g" $WIFI_UC
 fi
 
+
+# 系统root密码
+if [ -n "$WRT_PW" ]; then
+    default_password=$(openssl passwd -5 $WRT_PW)
+    sed -i "s|^root:[^:]*:|root:${default_password}:|" package/base-files/files/etc/shadow
+fi
+
+
 CFG_FILE="./package/base-files/files/bin/config_generate"
 #修改默认IP地址
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
