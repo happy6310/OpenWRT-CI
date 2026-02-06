@@ -62,10 +62,11 @@ UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
         taskd luci-lib-xterm luci-lib-taskd luci-app-passwall2 \
         luci-app-store quickstart luci-app-quickstart luci-app-istorex luci-app-cloudflarespeedtest \
         luci-theme-argon netdata luci-app-netdata lucky luci-app-lucky luci-app-openclash mihomo \
-        luci-app-nikki frp luci-app-ddns-go ddns-go docker dockerd" "kenzok8/small-package" "main" "pkg"
+        luci-app-nikki frp luci-app-ddns-go ddns-go docker dockerd 、
+		luci-app-istorex " "kenzok8/small-package" "main" "pkg"
 
 # luci-app-ipsec-server		
-UPDATE_PACKAGE "luci-app-ipsec-server luci-app-istorex" "NueXini/NueXini_Packages" "main" "pkg"
+# UPDATE_PACKAGE "luci-app-ipsec-server luci-app-istorex" "NueXini/NueXini_Packages" "main" "pkg"
 
 
 
@@ -82,7 +83,7 @@ sed -i 's|$(INSTALL_BIN) $(PKG_BUILD_DIR)/quickfile-$(ARCH_PACKAGES) $(1)/usr/bi
 
 #UPDATE_PACKAGE "frp" "https://github.com/ysuolmai/openwrt-frp.git" "main"
 
-# bandix
+# bandix LuCI Bandix 是一个用于 OpenWrt 的网络流量监控应用，通过 LuCI Web 界面提供直观的流量数据展示和分析功能。
 UPDATE_PACKAGE "openwrt-bandix" "timsaya/openwrt-bandix" "main"
 UPDATE_PACKAGE "luci-app-bandix" "timsaya/luci-app-bandix" "main"
 
@@ -125,17 +126,17 @@ UPDATE_PACKAGE "luci-app-bandix" "timsaya/luci-app-bandix" "main"
 #sudo -E apt-get -y install $(curl -fsSL https://raw.githubusercontent.com/ophub/amlogic-s9xxx-armbian/main/compile-kernel/tools/script/ubuntu2204-make-openwrt-depends)
 
 # 只保留指定的 qualcommax_ipq60xx 设备
-if [[ $WRT_CONFIG == *"EMMC"* ]]; then
-    # 有 EMMC 时，只保留：redmi_ax5-jdcloud / jdcloud_re-ss-01 / jdcloud_re-cs-07
-    keep_pattern="\(redmi_ax5-jdcloud\|jdcloud_re-ss-01\|jdcloud_re-cs-07\)=y$"
-else
-    # 普通情况，只保留这几个
-    keep_pattern="\(redmi_ax5\|qihoo_360v6\|redmi_ax5-jdcloud\|zn_m2\|jdcloud_re-ss-01\|jdcloud_re-cs-07\)=y$"
-fi
+# if [[ $WRT_CONFIG == *"EMMC"* ]]; then
+#     # 有 EMMC 时，只保留：redmi_ax5-jdcloud / jdcloud_re-ss-01 / jdcloud_re-cs-07
+#     keep_pattern="\(redmi_ax5-jdcloud\|jdcloud_re-ss-01\|jdcloud_re-cs-07\)=y$"
+# else
+#     # 普通情况，只保留这几个
+#     keep_pattern="\(redmi_ax5\|qihoo_360v6\|redmi_ax5-jdcloud\|zn_m2\|jdcloud_re-ss-01\|jdcloud_re-cs-07\)=y$"
+# fi
 
-sed -i "/^CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_/{
-    /$keep_pattern/!d
-}" ./.config
+# sed -i "/^CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_/{
+#     /$keep_pattern/!d
+# }" ./.config
 
 # 先不删除。
 # keywords_to_delete=(
@@ -194,7 +195,8 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-cifs-mount=y"
 	"CONFIG_PACKAGE_kmod-fs-cifs=y"
     "CONFIG_PACKAGE_cifsmount=y"
-	"CONFIG_PACKAGE_luci-app-ipsec-server=y"
+	# "CONFIG_PACKAGE_luci-app-ipsec-server=y"
+	"CONFIG_PACKAGE_luci-app-bandix=y"
 	"CONFIG_PACKAGE_luci-app-istorex=y"
 	"CONFIG_PACKAGE_luci-app-openlist2=y"
     "CONFIG_PACKAGE_luci-i18n-openlist2-zh-cn=y"
@@ -350,11 +352,11 @@ if [ -f ./package/luci-app-store/Makefile ]; then
 fi
 
 
-if [ -f ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init ]; then
-    cp ${GITHUB_WORKSPACE}/Scripts/ddns-go.init ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init
-	chmod +x ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init
-	echo "ddns-go.init has been replaced successfully."
-fi
+# if [ -f ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init ]; then
+#     cp ${GITHUB_WORKSPACE}/Scripts/ddns-go.init ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init
+# 	chmod +x ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init
+# 	echo "ddns-go.init has been replaced successfully."
+# fi
 
 
 
