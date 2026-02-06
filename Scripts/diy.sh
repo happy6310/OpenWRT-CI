@@ -90,35 +90,35 @@ UPDATE_PACKAGE "luci-app-bandix" "timsaya/luci-app-bandix" "main"
 #######################################
 #DIY Settings
 #######################################
-WRT_IP="192.168.1.1"
-WRT_NAME="FWRT"
-WRT_WIFI="FWRT"
+#WRT_IP="192.168.1.1"
+#WRT_NAME="FWRT"
+#WRT_WIFI="FWRT"
 #修改immortalwrt.lan关联IP
-sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
+# sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 
-WIFI_SH=$(find ./target/linux/{mediatek/filogic,qualcommax}/base-files/etc/uci-defaults/ -type f -name "*set-wireless.sh")
-WIFI_UC="./package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc"
-if [ -f "$WIFI_SH" ]; then
-	#修改WIFI名称
-	sed -i "s/BASE_SSID='.*'/BASE_SSID='$WRT_SSID'/g" $WIFI_SH
-	#修改WIFI密码
-	sed -i "s/BASE_WORD='.*'/BASE_WORD='$WRT_WORD'/g" $WIFI_SH
-elif [ -f "$WIFI_UC" ]; then
-	#修改WIFI名称
-	sed -i "s/ssid='.*'/ssid='$WRT_SSID'/g" $WIFI_UC
-	#修改WIFI密码
-	sed -i "s/key='.*'/key='$WRT_WORD'/g" $WIFI_UC
-	#修改WIFI地区
-	sed -i "s/country='.*'/country='CN'/g" $WIFI_UC
-	#修改WIFI加密
-	sed -i "s/encryption='.*'/encryption='psk2+ccmp'/g" $WIFI_UC
-fi
+# WIFI_SH=$(find ./target/linux/{mediatek/filogic,qualcommax}/base-files/etc/uci-defaults/ -type f -name "*set-wireless.sh")
+# WIFI_UC="./package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc"
+# if [ -f "$WIFI_SH" ]; then
+# 	#修改WIFI名称
+# 	sed -i "s/BASE_SSID='.*'/BASE_SSID='$WRT_SSID'/g" $WIFI_SH
+# 	#修改WIFI密码
+# 	sed -i "s/BASE_WORD='.*'/BASE_WORD='$WRT_WORD'/g" $WIFI_SH
+# elif [ -f "$WIFI_UC" ]; then
+# 	#修改WIFI名称
+# 	sed -i "s/ssid='.*'/ssid='$WRT_SSID'/g" $WIFI_UC
+# 	#修改WIFI密码
+# 	sed -i "s/key='.*'/key='$WRT_WORD'/g" $WIFI_UC
+# 	#修改WIFI地区
+# 	sed -i "s/country='.*'/country='CN'/g" $WIFI_UC
+# 	#修改WIFI加密
+# 	sed -i "s/encryption='.*'/encryption='psk2+ccmp'/g" $WIFI_UC
+# fi
 
-CFG_FILE="./package/base-files/files/bin/config_generate"
-#修改默认IP地址
-sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
-#修改默认主机名
-sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
+# CFG_FILE="./package/base-files/files/bin/config_generate"
+# #修改默认IP地址
+# sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
+# #修改默认主机名
+# sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
 
 
 #补齐依赖
@@ -137,31 +137,31 @@ sed -i "/^CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_/{
     /$keep_pattern/!d
 }" ./.config
 
+# 先不删除。
+# keywords_to_delete=(
+#     #"xiaomi_ax3600" "xiaomi_ax9000" "xiaomi_ax1800" "glinet" "jdcloud_ax6600" "linksys" "link_nn6600" "re-cs-02" "nn6600" "mr7350"
+#     "uugamebooster" "luci-app-wol" "luci-i18n-wol-zh-cn" "CONFIG_TARGET_INITRAMFS" "ddns" "luci-app-advancedplus" "mihomo" "nikki"
+#     "smartdns" "kucat" "bootstrap" "kucat" "luci-app-partexp" "luci-app-upnp"
+# )
 
-keywords_to_delete=(
-    #"xiaomi_ax3600" "xiaomi_ax9000" "xiaomi_ax1800" "glinet" "jdcloud_ax6600" "linksys" "link_nn6600" "re-cs-02" "nn6600" "mr7350"
-    "uugamebooster" "luci-app-wol" "luci-i18n-wol-zh-cn" "CONFIG_TARGET_INITRAMFS" "ddns" "luci-app-advancedplus" "mihomo" "nikki"
-    "smartdns" "kucat" "bootstrap" "kucat" "luci-app-partexp" "luci-app-upnp"
-)
+# [[ $WRT_CONFIG == *"WIFI-NO"* ]] && keywords_to_delete+=("usb" "wpad" "hostapd")
+# [[ $WRT_CONFIG != *"EMMC"* ]] && keywords_to_delete+=("samba" "autosamba" "disk")
 
-[[ $WRT_CONFIG == *"WIFI-NO"* ]] && keywords_to_delete+=("usb" "wpad" "hostapd")
-[[ $WRT_CONFIG != *"EMMC"* ]] && keywords_to_delete+=("samba" "autosamba" "disk")
-
-for keyword in "${keywords_to_delete[@]}"; do
-    sed -i "/$keyword/d" ./.config
-done
+# for keyword in "${keywords_to_delete[@]}"; do
+#     sed -i "/$keyword/d" ./.config
+# done
 
 # Configuration lines to append to .config
 provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-zerotier=y"
     "CONFIG_PACKAGE_luci-i18n-zerotier-zh-cn=y"
    # "CONFIG_PACKAGE_luci-app-adguardhome=y"
-    "CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y"
-    "CONFIG_PACKAGE_luci-app-poweroff=y"
-    "CONFIG_PACKAGE_luci-i18n-poweroff-zh-cn=y"
-    "CONFIG_PACKAGE_cpufreq=y"
-    "CONFIG_PACKAGE_luci-app-cpufreq=y"
-    "CONFIG_PACKAGE_luci-i18n-cpufreq-zh-cn=y"
+   # "CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y"
+   # "CONFIG_PACKAGE_luci-app-poweroff=y"
+   # "CONFIG_PACKAGE_luci-i18n-poweroff-zh-cn=y"
+   # "CONFIG_PACKAGE_cpufreq=y"
+   # "CONFIG_PACKAGE_luci-app-cpufreq=y"
+   # "CONFIG_PACKAGE_luci-i18n-cpufreq-zh-cn=y"
     "CONFIG_PACKAGE_luci-app-ttyd=y"
     "CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y"
     "CONFIG_PACKAGE_ttyd=y"
@@ -348,6 +348,7 @@ if [ -f ./package/luci-app-store/Makefile ]; then
     # 把 PKG_VERSION:=x.y.z-n 拆成 PKG_VERSION:=x.y.z 和 PKG_RELEASE:=n
     sed -i -E 's/PKG_VERSION:=([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)/PKG_VERSION:=\1\nPKG_RELEASE:=\2/' ./package/luci-app-store/Makefile
 fi
+
 
 if [ -f ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init ]; then
     cp ${GITHUB_WORKSPACE}/Scripts/ddns-go.init ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init
