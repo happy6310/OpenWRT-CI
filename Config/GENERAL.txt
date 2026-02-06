@@ -1,14 +1,38 @@
-# ipsec
+### LuCI → ubus → ipsec-vpnd → strongSwan charon → 内核 IPsec
+# ===== LuCI 前端 =====
 CONFIG_PACKAGE_luci-app-ipsec-vpnd=y
 CONFIG_PACKAGE_luci-i18n-ipsec-vpnd-zh-cn=y
 
-CONFIG_PACKAGE_iptables-mod-ipsec=y
-CONFIG_PACKAGE_kmod-ipsec=y
-CONFIG_PACKAGE_kmod-ipsec4=y
-CONFIG_PACKAGE_kmod-ipsec6=y
-CONFIG_PACKAGE_kmod-ipt-ipsec=y
-CONFIG_PACKAGE_strongswan-ipsec=y
+# ===== strongSwan 核心 =====
+CONFIG_PACKAGE_strongswan=y
+CONFIG_PACKAGE_strongswan-charon=y
+CONFIG_PACKAGE_strongswan-minimal=y
+
+# ===== 必须插件（没有就起不来）=====
+CONFIG_PACKAGE_strongswan-mod-kernel-netlink=y
+CONFIG_PACKAGE_strongswan-mod-socket-default=y
+CONFIG_PACKAGE_strongswan-mod-nonce=y
+CONFIG_PACKAGE_strongswan-mod-random=y
+CONFIG_PACKAGE_strongswan-mod-x509=y
+CONFIG_PACKAGE_strongswan-mod-pubkey=y
+CONFIG_PACKAGE_strongswan-mod-openssl=y
+CONFIG_PACKAGE_strongswan-mod-constraints=y
 CONFIG_PACKAGE_strongswan-mod-kernel-libipsec=y
+CONFIG_PACKAGE_strongswan-mod-updown=y
+
+# ===== NAT 穿透（手机连不上就是缺这个）=====
+CONFIG_PACKAGE_strongswan-mod-nat-transport=y
+
+# ===== 防火墙 =====
+CONFIG_PACKAGE_iptables-mod-ipsec=y
+CONFIG_PACKAGE_kmod-ipt-ipsec=y
+
+# CONFIG_PACKAGE_luci=y
+# CONFIG_PACKAGE_luci-ssl=y
+# CONFIG_PACKAGE_uhttpd=y
+# CONFIG_PACKAGE_uhttpd-mod-ubus=y
+# CONFIG_PACKAGE_rpcd-mod-luci=y
+
 
 
 # openclash
