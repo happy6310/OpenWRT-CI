@@ -1,6 +1,6 @@
 # LuCI
-CONFIG_PACKAGE_luci-app-ipsec-vpnd=y
-CONFIG_PACKAGE_luci-i18n-ipsec-vpnd-zh-cn=y
+#CONFIG_PACKAGE_luci-app-ipsec-vpnd=y
+#CONFIG_PACKAGE_luci-i18n-ipsec-vpnd-zh-cn=y
 
 # strongSwan core
 CONFIG_PACKAGE_strongswan-minimal=y
