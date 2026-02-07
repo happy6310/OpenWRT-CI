@@ -78,6 +78,7 @@ UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
 		luci-app-cloudflarespeedtest \
         luci-theme-argon \
 		luci-app-openclash mihomo \
+		luci-app-socat \
 		" "kenzok8/small-package" "main" "pkg"
 
 
@@ -189,6 +190,8 @@ provided_config_lines=(
 		# "CONFIG_PACKAGE_luci-app-ipsec-server=y"
 		
 		"CONFIG_USE_APK=n"
+		"CONFIG_PACKAGE_luci-app-quickstart=y"
+		"CONFIG_PACKAGE_luci-app-socat=y"
 		"CONFIG_PACKAGE_luci-app-argon-config=y"
 		"CONFIG_PACKAGE_nano=y"
 		"CONFIG_PACKAGE_luci-app-netspeedtest=y"
