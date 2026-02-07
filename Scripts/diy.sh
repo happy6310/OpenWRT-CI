@@ -46,42 +46,51 @@ UPDATE_PACKAGE() {
 	esac
 }
 
-UPDATE_PACKAGE "luci-app-poweroff" "esirplayground/luci-app-poweroff" "main"
-UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
-UPDATE_PACKAGE "openwrt-gecoosac" "lwb1978/openwrt-gecoosac" "main"
+#UPDATE_PACKAGE "luci-app-poweroff" "esirplayground/luci-app-poweroff" "main"
+#UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
+#UPDATE_PACKAGE "luci-app-openlist2" "sbwml/luci-app-openlist2" "main"
+#UPDATE_PACKAGE "openwrt-gecoosac" "lwb1978/openwrt-gecoosac" "main"
 #UPDATE_PACKAGE "luci-app-homeproxy" "immortalwrt/homeproxy" "master"
 #UPDATE_PACKAGE "luci-app-ddns-go" "sirpdboy/luci-app-ddns-go" "main"
 #UPDATE_PACKAGE "luci-app-alist" "sbwml/luci-app-alist" "main"
-UPDATE_PACKAGE "luci-app-openlist2" "sbwml/luci-app-openlist2" "main"
+# luci-app-ipsec-server		
+#UPDATE_PACKAGE "luci-app-ipsec-server luci-app-istorex" "NueXini/NueXini_Packages" "main" "pkg"
+# UPDATE_PACKAGE "luci-app-adguardhome" "https://github.com/ysuolmai/luci-app-adguardhome.git" "apk"
+#UPDATE_PACKAGE "openwrt-podman" "https://github.com/breeze303/openwrt-podman" "main"
+#UPDATE_PACKAGE "frp" "https://github.com/ysuolmai/openwrt-frp.git" "main"
+
 
 #small-package
 UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
         naiveproxy v2ray-core v2ray-geodata v2ray-geoview v2ray-plugin \
-        tuic-client chinadns-ng ipt2socks tcping trojan-plus simple-obfs shadowsocksr-libev \
-        luci-app-passwall smartdns luci-app-smartdns v2dat mosdns luci-app-mosdns \
-        taskd luci-lib-xterm luci-lib-taskd luci-app-passwall2 \
-        luci-app-store quickstart luci-app-quickstart luci-app-istorex luci-app-cloudflarespeedtest \
-        luci-theme-argon netdata luci-app-netdata lucky luci-app-lucky luci-app-openclash mihomo \
-        luci-app-nikki frp luci-app-ddns-go ddns-go docker dockerd 、
-		luci-app-istorex " "kenzok8/small-package" "main" "pkg"
+        tuic-client chinadns-ng ipt2socks tcping trojan-plus simple-obfs shadowsocksr-libev v2dat   \
+        taskd luci-lib-xterm luci-lib-taskd \
+        luci-app-store quickstart luci-app-quickstart \
+	    # luci-app-passwall luci-app-passwall2 \
+		# smartdns luci-app-smartdns \
+		# luci-app-istorex \
+		# luci-app-ddns-go ddns-go \
+		# docker dockerd \
+		# luci-app-mosdns mosdns\
+		# netdata luci-app-netdata \
+		# lucky luci-app-lucky \
+		# luci-app-nikki frp \
+		luci-app-cloudflarespeedtest \
+        luci-theme-argon \
+		luci-app-openclash mihomo \
+		" "kenzok8/small-package" "main" "pkg"
 
-# luci-app-ipsec-server		
-# UPDATE_PACKAGE "luci-app-ipsec-server luci-app-istorex" "NueXini/NueXini_Packages" "main" "pkg"
 
 
 
-#speedtest
+#speedtest iPerf3 带宽性能测试
 UPDATE_PACKAGE "luci-app-netspeedtest" "https://github.com/sbwml/openwrt_pkgs.git" "main" "pkg"
+
 UPDATE_PACKAGE "speedtest-cli" "https://github.com/sbwml/openwrt_pkgs.git" "main" "pkg"
 
-# UPDATE_PACKAGE "luci-app-adguardhome" "https://github.com/ysuolmai/luci-app-adguardhome.git" "apk"
-UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
-
-UPDATE_PACKAGE "openwrt-podman" "https://github.com/breeze303/openwrt-podman" "main"
 UPDATE_PACKAGE "luci-app-quickfile" "https://github.com/sbwml/luci-app-quickfile" "main"
 sed -i 's|$(INSTALL_BIN) $(PKG_BUILD_DIR)/quickfile-$(ARCH_PACKAGES) $(1)/usr/bin/quickfile|$(INSTALL_BIN) $(PKG_BUILD_DIR)/quickfile-aarch64_generic $(1)/usr/bin/quickfile|' package/luci-app-quickfile/quickfile/Makefile
 
-#UPDATE_PACKAGE "frp" "https://github.com/ysuolmai/openwrt-frp.git" "main"
 
 # bandix LuCI Bandix 是一个用于 OpenWrt 的网络流量监控应用，通过 LuCI Web 界面提供直观的流量数据展示和分析功能。
 UPDATE_PACKAGE "openwrt-bandix" "timsaya/openwrt-bandix" "main"
@@ -154,52 +163,55 @@ UPDATE_PACKAGE "luci-app-bandix" "timsaya/luci-app-bandix" "main"
 
 # Configuration lines to append to .config
 provided_config_lines=(
-   # "CONFIG_PACKAGE_luci-app-zerotier=y"
-   # "CONFIG_PACKAGE_luci-i18n-zerotier-zh-cn=y"
-   # "CONFIG_PACKAGE_luci-app-adguardhome=y"
-   # "CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y"
-   # "CONFIG_PACKAGE_luci-app-poweroff=y"
-   # "CONFIG_PACKAGE_luci-i18n-poweroff-zh-cn=y"
-   # "CONFIG_PACKAGE_cpufreq=y"
-   # "CONFIG_PACKAGE_luci-app-cpufreq=y"
-   # "CONFIG_PACKAGE_luci-i18n-cpufreq-zh-cn=y"
-    "CONFIG_PACKAGE_luci-app-ttyd=y"
-    "CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y"
-    "CONFIG_PACKAGE_ttyd=y"
-    #"CONFIG_PACKAGE_luci-app-homeproxy=y"
-    #"CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn=y"
-    #"CONFIG_PACKAGE_luci-app-ddns-go=y"
-    #"CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y"
-    "CONFIG_PACKAGE_luci-app-argon-config=y"
-    "CONFIG_PACKAGE_nano=y"
-    #"CONFIG_BUSYBOX_CONFIG_LSUSB=n"
-    "CONFIG_PACKAGE_luci-app-netspeedtest=y"
-    "CONFIG_PACKAGE_luci-app-vlmcsd=y"
-    "CONFIG_COREMARK_OPTIMIZE_O3=y"
-    "CONFIG_COREMARK_ENABLE_MULTITHREADING=y"
-    "CONFIG_COREMARK_NUMBER_OF_THREADS=6"
-    #"CONFIG_PACKAGE_luci-theme-design=y"
-    "CONFIG_PACKAGE_luci-app-filetransfer=y"
-    "CONFIG_PACKAGE_openssh-sftp-server=y"
-    #"CONFIG_PACKAGE_luci-app-frpc=y" 
-    "CONFIG_OPKG_USE_CURL=y"
-    "CONFIG_PACKAGE_opkg=y"   
-    "CONFIG_USE_APK=n"
-    "CONFIG_PACKAGE_luci-app-tailscale=y"
-    #"CONFIG_PACKAGE_luci-app-msd_lite=y"
-    #"CONFIG_PACKAGE_luci-app-lucky=y"
-    "CONFIG_PACKAGE_luci-app-gecoosac=y"
-	"CONFIG_PACKAGE_kmod-wireguard=y"
-    "CONFIG_PACKAGE_wireguard-tools=y"
-	"CONFIG_PACKAGE_luci-proto-wireguard=y"
-    "CONFIG_PACKAGE_luci-app-cifs-mount=y"
-	"CONFIG_PACKAGE_kmod-fs-cifs=y"
-    "CONFIG_PACKAGE_cifsmount=y"
-	# "CONFIG_PACKAGE_luci-app-ipsec-server=y"
-	"CONFIG_PACKAGE_luci-app-bandix=y"
-	"CONFIG_PACKAGE_luci-app-istorex=y"
-	#"CONFIG_PACKAGE_luci-app-openlist2=y"
-    #"CONFIG_PACKAGE_luci-i18n-openlist2-zh-cn=y"
+		# "CONFIG_PACKAGE_luci-app-zerotier=y"
+		# "CONFIG_PACKAGE_luci-i18n-zerotier-zh-cn=y"
+		# "CONFIG_PACKAGE_luci-app-adguardhome=y"
+		# "CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y"
+		# "CONFIG_PACKAGE_luci-app-poweroff=y"
+		# "CONFIG_PACKAGE_luci-i18n-poweroff-zh-cn=y"
+		# "CONFIG_PACKAGE_cpufreq=y"
+		# "CONFIG_PACKAGE_luci-app-cpufreq=y"
+		# "CONFIG_PACKAGE_luci-i18n-cpufreq-zh-cn=y"
+		#"CONFIG_PACKAGE_luci-app-homeproxy=y"
+		#"CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn=y"
+		#"CONFIG_PACKAGE_luci-app-ddns-go=y"
+		#"CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y"
+		#"CONFIG_BUSYBOX_CONFIG_LSUSB=n"
+		#"CONFIG_PACKAGE_luci-theme-design=y"
+		#"CONFIG_PACKAGE_luci-app-frpc=y" 
+		#"CONFIG_PACKAGE_luci-app-tailscale=y"
+		#"CONFIG_PACKAGE_luci-app-msd_lite=y"
+		#"CONFIG_PACKAGE_luci-app-lucky=y"
+		#"CONFIG_PACKAGE_luci-app-gecoosac=y"
+		#"CONFIG_PACKAGE_luci-app-istorex=y"
+		#"CONFIG_PACKAGE_luci-app-openlist2=y"
+		#"CONFIG_PACKAGE_luci-i18n-openlist2-zh-cn=y"
+		# "CONFIG_PACKAGE_luci-app-ipsec-server=y"
+		
+		"CONFIG_USE_APK=n"
+		"CONFIG_PACKAGE_luci-app-argon-config=y"
+		"CONFIG_PACKAGE_nano=y"
+		"CONFIG_PACKAGE_luci-app-netspeedtest=y"
+		"CONFIG_PACKAGE_luci-app-vlmcsd=y"
+		"CONFIG_COREMARK_OPTIMIZE_O3=y"
+		"CONFIG_COREMARK_ENABLE_MULTITHREADING=y"
+		"CONFIG_COREMARK_NUMBER_OF_THREADS=6"
+		"CONFIG_OPKG_USE_CURL=y"
+		"CONFIG_PACKAGE_opkg=y"   
+		"CONFIG_PACKAGE_luci-app-ttyd=y"
+		"CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y"
+		"CONFIG_PACKAGE_ttyd=y"
+		"CONFIG_PACKAGE_kmod-wireguard=y"
+		"CONFIG_PACKAGE_wireguard-tools=y"
+		"CONFIG_PACKAGE_luci-proto-wireguard=y"
+		"CONFIG_PACKAGE_luci-app-cifs-mount=y"
+		"CONFIG_PACKAGE_kmod-fs-cifs=y"
+		"CONFIG_PACKAGE_cifsmount=y"
+		"CONFIG_PACKAGE_luci-app-bandix=y"
+		"CONFIG_PACKAGE_luci-app-store=y"
+		"CONFIG_PACKAGE_luci-app-filetransfer=y"
+		"CONFIG_PACKAGE_openssh-sftp-server=y"
+
 	
 	 
 	
@@ -269,13 +281,13 @@ fi
     "CONFIG_PACKAGE_kmod-dummy=y"
     "CONFIG_PACKAGE_kmod-veth=y"
     #"CONFIG_PACKAGE_automount=y"
-    "CONFIG_PACKAGE_luci-app-frps=y"
+    #"CONFIG_PACKAGE_luci-app-frps=y"
     #"CONFIG_PACKAGE_luci-app-ssr-plus=y"
     #"CONFIG_PACKAGE_luci-app-passwall2=y"
     "CONFIG_PACKAGE_luci-app-samba4=y"
     "CONFIG_PACKAGE_luci-app-openclash=y"
-    #"CONFIG_PACKAGE_luci-app-quickfile=y"
-    #"CONFIG_PACKAGE_quickfile=y"
+    "CONFIG_PACKAGE_luci-app-quickfile=y"
+    "CONFIG_PACKAGE_quickfile=y"
 	"CONFIG_PACKAGE_libuver-zero=y"
 	"CONFIG_PACKAGE_kmod-sched-tbf=y"
 	"CONFIG_PACKAGE_kmod-sched-htb=y"
