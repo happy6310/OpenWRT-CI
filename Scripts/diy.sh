@@ -154,8 +154,8 @@ UPDATE_PACKAGE "luci-app-bandix" "timsaya/luci-app-bandix" "main"
 
 # Configuration lines to append to .config
 provided_config_lines=(
-    "CONFIG_PACKAGE_luci-app-zerotier=y"
-    "CONFIG_PACKAGE_luci-i18n-zerotier-zh-cn=y"
+   # "CONFIG_PACKAGE_luci-app-zerotier=y"
+   # "CONFIG_PACKAGE_luci-i18n-zerotier-zh-cn=y"
    # "CONFIG_PACKAGE_luci-app-adguardhome=y"
    # "CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y"
    # "CONFIG_PACKAGE_luci-app-poweroff=y"
@@ -168,8 +168,8 @@ provided_config_lines=(
     "CONFIG_PACKAGE_ttyd=y"
     #"CONFIG_PACKAGE_luci-app-homeproxy=y"
     #"CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn=y"
-    "CONFIG_PACKAGE_luci-app-ddns-go=y"
-    "CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y"
+    #"CONFIG_PACKAGE_luci-app-ddns-go=y"
+    #"CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y"
     "CONFIG_PACKAGE_luci-app-argon-config=y"
     "CONFIG_PACKAGE_nano=y"
     #"CONFIG_BUSYBOX_CONFIG_LSUSB=n"
@@ -181,7 +181,7 @@ provided_config_lines=(
     #"CONFIG_PACKAGE_luci-theme-design=y"
     "CONFIG_PACKAGE_luci-app-filetransfer=y"
     "CONFIG_PACKAGE_openssh-sftp-server=y"
-    "CONFIG_PACKAGE_luci-app-frpc=y" 
+    #"CONFIG_PACKAGE_luci-app-frpc=y" 
     "CONFIG_OPKG_USE_CURL=y"
     "CONFIG_PACKAGE_opkg=y"   
     "CONFIG_USE_APK=n"
@@ -198,8 +198,8 @@ provided_config_lines=(
 	# "CONFIG_PACKAGE_luci-app-ipsec-server=y"
 	"CONFIG_PACKAGE_luci-app-bandix=y"
 	"CONFIG_PACKAGE_luci-app-istorex=y"
-	"CONFIG_PACKAGE_luci-app-openlist2=y"
-    "CONFIG_PACKAGE_luci-i18n-openlist2-zh-cn=y"
+	#"CONFIG_PACKAGE_luci-app-openlist2=y"
+    #"CONFIG_PACKAGE_luci-i18n-openlist2-zh-cn=y"
 	
 	 
 	
