@@ -54,7 +54,7 @@ UPDATE_PACKAGE() {
 #UPDATE_PACKAGE "luci-app-ddns-go" "sirpdboy/luci-app-ddns-go" "main"
 #UPDATE_PACKAGE "luci-app-alist" "sbwml/luci-app-alist" "main"
 # luci-app-ipsec-server		
-#UPDATE_PACKAGE "luci-app-ipsec-server luci-app-istorex" "NueXini/NueXini_Packages" "main" "pkg"
+UPDATE_PACKAGE "luci-app-ipsec-server" "NueXini/NueXini_Packages" "main" "pkg"
 # UPDATE_PACKAGE "luci-app-adguardhome" "https://github.com/ysuolmai/luci-app-adguardhome.git" "apk"
 #UPDATE_PACKAGE "openwrt-podman" "https://github.com/breeze303/openwrt-podman" "main"
 #UPDATE_PACKAGE "frp" "https://github.com/ysuolmai/openwrt-frp.git" "main"
@@ -187,8 +187,7 @@ provided_config_lines=(
 		#"CONFIG_PACKAGE_luci-app-istorex=y"
 		#"CONFIG_PACKAGE_luci-app-openlist2=y"
 		#"CONFIG_PACKAGE_luci-i18n-openlist2-zh-cn=y"
-		# "CONFIG_PACKAGE_luci-app-ipsec-server=y"
-		
+		"CONFIG_PACKAGE_luci-app-ipsec-server=y"
 		"CONFIG_USE_APK=n"
 		"CONFIG_PACKAGE_luci-app-quickstart=y"
 		"CONFIG_PACKAGE_luci-app-socat=y"
