@@ -47,6 +47,10 @@ CONFIG_TARGET_mediatek_filogic=y
 # CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_xiaomi_mi-router-wr30u-ubootmod=y
 # CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_xiaomi_redmi-router-ax6000-stock=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_xiaomi_redmi-router-ax6000-ubootmod=y
+
+CONFIG_TARGET_DEVICE_PACKAGES_mediatek_filogic_DEVICE_xiaomi_redmi-router-ax6000-ubootmod="dawn jool-tools-netfilter kmod-bonding kmod-gpio-button-hotplug kmod-inet-diag kmod-jool-netfilter kmod-leds-gpio kmod-leds-ws2812b kmod-nat46 kmod-nf-conntrack-netlink libgcrypt libgpg-error liblzo libnl libnl-core libnl-genl libnl-nf libnl-route libopenssl-conf libpcre libqrencode libxml2 luci-app-dawn luci-app-openvpn luci-app-sqm luci-i18n-dashboard-zh-cn luci-i18n-openvpn-zh-cn luci-i18n-sqm-zh-cn luci-lib-json luci-mod-dashboard luci-proto-bonding luci-proto-relay luci-proto-wireguard luci-ssl-nginx nginx nginx-mod-luci nginx-mod-luci-ssl nginx-ssl nginx-ssl-util nginx-util openssl-util openvpn-openssl proto-bonding qrencode relayd sqm-scripts tc-tiny uwsgi uwsgi-cgi-plugin uwsgi-luci-support uwsgi-syslog-plugin wireguard-tools wpad-openssl"
+
+
 # CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_zyxel_ex5700-telenor=y
 
 # LED modules
