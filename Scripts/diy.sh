@@ -76,7 +76,7 @@ UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
 		# lucky luci-app-lucky \
 		# luci-app-nikki frp \
 		luci-app-cloudflarespeedtest \
-        luci-theme-argon \
+        # luci-theme-argon \
 		luci-app-openclash mihomo \
 		luci-app-socat \
 		" "kenzok8/small-package" "main" "pkg"
