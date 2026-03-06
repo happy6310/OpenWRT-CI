@@ -77,7 +77,7 @@ UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
 		# luci-app-nikki frp \
 		luci-app-cloudflarespeedtest \
         # luci-theme-argon \
-		luci-app-openclash mihomo \
+		# luci-app-openclash mihomo \
 		luci-app-socat \
 		" "kenzok8/small-package" "main" "pkg"
 
@@ -287,7 +287,7 @@ fi
     #"CONFIG_PACKAGE_luci-app-ssr-plus=y"
     #"CONFIG_PACKAGE_luci-app-passwall2=y"
     "CONFIG_PACKAGE_luci-app-samba4=y"
-    "CONFIG_PACKAGE_luci-app-openclash=y"
+    # "CONFIG_PACKAGE_luci-app-openclash=y"
     "CONFIG_PACKAGE_luci-app-quickfile=y"
     "CONFIG_PACKAGE_quickfile=y"
 	"CONFIG_PACKAGE_libuver-zero=y"
@@ -353,9 +353,9 @@ fi
 if [ -f ./package/luci-lib-taskd/Makefile ]; then
     sed -i 's/>=1\.0\.3-1/>=1\.0\.3-r1/g' ./package/luci-lib-taskd/Makefile
 fi
-if [ -f ./package/luci-app-openclash/Makefile ]; then
-    sed -i '/^PKG_VERSION:=/a PKG_RELEASE:=1' ./package/luci-app-openclash/Makefile
-fi
+# if [ -f ./package/luci-app-openclash/Makefile ]; then
+#     sed -i '/^PKG_VERSION:=/a PKG_RELEASE:=1' ./package/luci-app-openclash/Makefile
+# fi
 if [ -f ./package/luci-app-quickstart/Makefile ]; then
     # 把 PKG_VERSION:=x.y.z-n 拆成 PKG_VERSION:=x.y.z 和 PKG_RELEASE:=n
     sed -i -E 's/PKG_VERSION:=([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)/PKG_VERSION:=\1\nPKG_RELEASE:=\2/' ./package/luci-app-quickstart/Makefile
