@@ -192,6 +192,7 @@ provided_config_lines=(
 		"CONFIG_PACKAGE_luci-app-quickstart=y"
 		"CONFIG_PACKAGE_luci-app-socat=y"
 		"CONFIG_PACKAGE_luci-app-argon-config=y"
+		"CONFIG_PACKAGE_luci-theme-argon=y"
 		"CONFIG_PACKAGE_nano=y"
 		"CONFIG_PACKAGE_luci-app-netspeedtest=y"
 		"CONFIG_PACKAGE_luci-app-vlmcsd=y"
