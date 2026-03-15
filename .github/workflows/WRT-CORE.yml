@@ -102,7 +102,10 @@ jobs:
         
       - name: Clone Code
         run: |
-          git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_REPO ./wrt/
+          if ! git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_REPO ./wrt/; then
+            echo "错误: 克隆源码失败"
+            exit 1
+          fi
 
           cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
 
@@ -194,7 +197,13 @@ jobs:
         run: |
           cd ./wrt/
 
-          make -j$(nproc) || make -j1 V=s
+          if ! make -j$(nproc); then
+            echo "编译失败，尝试单线程编译并显示详细信息..."
+            make -j1 V=s || {
+              echo "错误: 编译失败"
+              exit 1
+            }
+          fi
 
       - name: Machine Information
         run: |
