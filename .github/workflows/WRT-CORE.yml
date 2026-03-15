@@ -191,29 +191,15 @@ jobs:
         if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
-
           make download -j$(nproc)
 
-      # 编译内核模块
-      - name: Compile Kernel Modules
-        if: env.WRT_TEST != 'true'
-        run: |
-          cd ./wrt/
-          make modules -j$(nproc)
           
       # 编译固件 （多线程编译）
       - name: Compile Firmware
         if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
-
-          if ! make -j$(nproc); then
-            echo "编译失败，尝试单线程编译并显示详细信息..."
-            make -j1 V=s || {
-              echo "错误: 编译失败"
-              exit 1
-            }
-          fi
+          make -j$(nproc) || make -j1 V=s
 
       - name: Machine Information
         run: |
