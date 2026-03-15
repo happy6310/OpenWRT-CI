@@ -73,6 +73,8 @@ jobs:
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
           sudo -E apt -yqq install dos2unix python3-netifaces python3-setuptools libfuse-dev
+          # 添加 Samba 依赖包
+          sudo -E apt -yqq install libtevent-dev libtdb-dev libldb-dev libtalloc-dev
           sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
@@ -192,6 +194,14 @@ jobs:
 
           make download -j$(nproc)
 
+      # 编译内核模块
+      - name: Compile Kernel Modules
+        if: env.WRT_TEST != 'true'
+        run: |
+          cd ./wrt/
+          make modules -j$(nproc)
+          
+      # 编译固件 （多线程编译）
       - name: Compile Firmware
         if: env.WRT_TEST != 'true'
         run: |
