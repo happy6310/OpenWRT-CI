@@ -81,6 +81,9 @@ UPDATE_PACKAGE "cups luci-app-cupsd \
                  " "https://github.com/fichenx/openwrt-package" "main" "pkg"
 
 
+# UPDATE_PACKAGE "vlmcsd" "https://github.com/Wind4/vlmcsd.git" "master"
+
+
 
 # 带宽监控 bandix
 UPDATE_PACKAGE "openwrt-bandix" "timsaya/openwrt-bandix" "main"
@@ -119,6 +122,9 @@ provided_config_lines=(
     "CONFIG_PACKAGE_kmod-wireguard=y"
     "CONFIG_PACKAGE_wireguard-tools=y"
     "CONFIG_PACKAGE_luci-proto-wireguard=y"
+    ########
+    "CONFIG_PACKAGE_vlmcsd=y"
+    "CONFIG_PACKAGE_luci-app-vlmcsd=y"
     ######## 
     "CONFIG_PACKAGE_luci-app-ipsec-server=y"
     "CONFIG_PACKAGE_luci-app-socat=y"
@@ -127,7 +133,6 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-wolplus=y"
     "CONFIG_PACKAGE_luci-app-autoreboot=y"
     "CONFIG_PACKAGE_luci-app-cupsd=y"
-    "CONFIG_PACKAGE_luci-app-vlmcsd=y"
     "CONFIG_PACKAGE_luci-app-netspeedtest=y"
     #"CONFIG_PACKAGE_ddns-scripts=y"
     #"CONFIG_PACKAGE_ddns-scripts_cloudflare.com-v4=y"
