@@ -61,20 +61,43 @@ UPDATE_PACKAGE() {
     esac
 }
 
-# 安装必要的应用
+# 主题
+UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
+
+####### 安装必要的应用
+
+# IPsec 服务器
 UPDATE_PACKAGE "luci-app-ipsec-server" "Ivaneus/luci-app-ipsec-server" "main"
+# 网络测试 speedtest-cli
 UPDATE_PACKAGE "speedtest-cli" "https://github.com/sbwml/openwrt_pkgs.git" "main" "pkg"
 UPDATE_PACKAGE "luci-app-netspeedtest" "https://github.com/sbwml/openwrt_pkgs.git" "main" "pkg"
+# 带宽监控 bandix
 UPDATE_PACKAGE "openwrt-bandix" "timsaya/openwrt-bandix" "main"
 UPDATE_PACKAGE "luci-app-bandix" "timsaya/luci-app-bandix" "main"
 
 # 直接安装所需的应用
 UPDATE_PACKAGE "luci-app-openclash" "vernesong/OpenClash" "dev" "pkg"
+# 端口转发 socat
 UPDATE_PACKAGE "luci-app-socat" "https://github.com/sbwml/luci-app-socat" "main"
+# WOL Plus
 UPDATE_PACKAGE "luci-app-wolplus" "VIKINGYFY/packages" "main"
 
 # 配置项
 provided_config_lines=(
+    "CONFIG_PACKAGE_bash=y"
+    "CONFIG_PACKAGE_dnsmasq-full=y"
+    "CONFIG_PACKAGE_curl=y"
+    "CONFIG_PACKAGE_ca-bundle=y"
+    "CONFIG_PACKAGE_ip-full=y"
+    "CONFIG_PACKAGE_ruby=y"
+    "CONFIG_PACKAGE_ruby-yaml=y"
+    "CONFIG_PACKAGE_kmod-tun=y"
+    "CONFIG_PACKAGE_kmod-inet-diag=y"
+    "CONFIG_PACKAGE_unzip=y"
+    "CONFIG_PACKAGE_kmod-nft-tproxy=y"
+    "CONFIG_PACKAGE_luci-compat=y"
+    #########
+
     "CONFIG_PACKAGE_luci-app-ipsec-server=y"
     "CONFIG_PACKAGE_luci-app-socat=y"
     "CONFIG_PACKAGE_luci-app-openclash=y"
@@ -87,9 +110,8 @@ provided_config_lines=(
     "CONFIG_PACKAGE_kmod-wireguard=y"
     "CONFIG_PACKAGE_wireguard-tools=y"
     "CONFIG_PACKAGE_luci-proto-wireguard=y"
-    "CONFIG_PACKAGE_luci-app-ddns=y"
-    "CONFIG_PACKAGE_ddns-scripts=y"
-    "CONFIG_PACKAGE_ddns-scripts_cloudflare.com-v4=y"
+    #"CONFIG_PACKAGE_ddns-scripts=y"
+    #"CONFIG_PACKAGE_ddns-scripts_cloudflare.com-v4=y"
 )
 
 # 追加配置
@@ -104,6 +126,24 @@ install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_ttyd-nopass.sh" "package/base-fil
 if ! grep -q "CMAKE_POLICY_VERSION_MINIMUM" include/cmake.mk; then
     echo 'CMAKE_OPTIONS += -DCMAKE_POLICY_VERSION_MINIMUM=3.5' >> include/cmake.mk
 fi
+
+
+# 在脚本末尾添加
+# 自动下载 Clash 内核
+mkdir -p package/base-files/files/etc/openclash/core/
+cat > package/base-files/files/etc/uci-defaults/99-openclash-core << 'EOF'
+#!/bin/sh
+# 下载 Clash 内核
+mkdir -p /etc/openclash/core/
+cd /etc/openclash/core/
+wget -O clash-linux-arm64.tar.gz https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz
+tar -xzf clash-linux-arm64.tar.gz
+mv clash-linux-arm64 clash_meta
+chmod +x clash_meta
+rm -f clash-linux-arm64.tar.gz
+EOF
+chmod +x package/base-files/files/etc/uci-defaults/99-openclash-core
+
 
 # 安装 Go
 ensure_latest_go() {
