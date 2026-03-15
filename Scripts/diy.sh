@@ -87,7 +87,8 @@ UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
 
 
 # luci-app-ipsec-server		
-UPDATE_PACKAGE "luci-app-ipsec-server" "NueXini/NueXini_Packages" "main" "pkg"
+# UPDATE_PACKAGE "luci-app-ipsec-server" "NueXini/NueXini_Packages" "main" "pkg"
+UPDATE_PACKAGE "luci-app-ipsec-server" "Ivaneus/luci-app-ipsec-server" "main"
 
 #speedtest iPerf3 带宽性能测试
 UPDATE_PACKAGE "speedtest-cli" "https://github.com/sbwml/openwrt_pkgs.git" "main" "pkg"
@@ -153,10 +154,8 @@ fi
     "CONFIG_PACKAGE_luci-i18n-dockerman-zh-cn=y"
     #"CONFIG_PACKAGE_luci-app-podman=y"
     #"CONFIG_PACKAGE_podman=y"
-    "CONFIG_PACKAGE_luci-app-openlist2=y"
-    "CONFIG_PACKAGE_luci-i18n-openlist2-zh-cn=y"
-    #"CONFIG_PACKAGE_fdisk=y"
-    #"CONFIG_PACKAGE_parted=y"
+    #"CONFIG_PACKAGE_luci-app-openlist2=y"
+    #"CONFIG_PACKAGE_luci-i18n-openlist2-zh-cn=y"
     "CONFIG_PACKAGE_iptables-mod-extra=y"
     "CONFIG_PACKAGE_ip6tables-nft=y"
     "CONFIG_PACKAGE_ip6tables-mod-fullconenat=y"
