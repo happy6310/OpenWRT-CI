@@ -1,4 +1,4 @@
-    #!/bin/bash
+#!/bin/bash
 
 #安装和更新软件包
 UPDATE_PACKAGE() {
@@ -63,26 +63,26 @@ UPDATE_PACKAGE() {
 
 
 
-#small-package
-UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
-        naiveproxy v2ray-core v2ray-geodata v2ray-geoview v2ray-plugin \
-        tuic-client chinadns-ng ipt2socks tcping trojan-plus simple-obfs shadowsocksr-libev v2dat   \
-        taskd luci-lib-xterm luci-lib-taskd \
-        luci-app-store quickstart luci-app-quickstart \
-	    # luci-app-passwall luci-app-passwall2 \
-		# smartdns luci-app-smartdns \
-		# luci-app-istorex \
-		# luci-app-ddns-go ddns-go \
-		# docker dockerd \
-		# luci-app-mosdns mosdns\
-		# netdata luci-app-netdata \
-		# lucky luci-app-lucky \
-		# luci-app-nikki frp \
-		luci-app-cloudflarespeedtest \
-        luci-theme-argon \
-		luci-app-openclash mihomo \
-		luci-app-socat \
-		" "kenzok8/small-package" "main" "pkg"
+# #small-package
+# UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
+#         naiveproxy v2ray-core v2ray-geodata v2ray-geoview v2ray-plugin \
+#         tuic-client chinadns-ng ipt2socks tcping trojan-plus simple-obfs shadowsocksr-libev v2dat   \
+#         taskd luci-lib-xterm luci-lib-taskd \
+#         luci-app-store quickstart luci-app-quickstart \
+# 	    # luci-app-passwall luci-app-passwall2 \
+# 		# smartdns luci-app-smartdns \
+# 		# luci-app-istorex \
+# 		# luci-app-ddns-go ddns-go \
+# 		# docker dockerd \
+# 		# luci-app-mosdns mosdns\
+# 		# netdata luci-app-netdata \
+# 		# lucky luci-app-lucky \
+# 		# luci-app-nikki frp \
+# 		luci-app-cloudflarespeedtest \
+#         luci-theme-argon \
+# 		luci-app-openclash mihomo \
+# 		luci-app-socat \
+# 		" "kenzok8/small-package" "main" "pkg"
 
 
 
@@ -471,8 +471,6 @@ fix_openwrt_apk_versions() {
 #fix cmake minimum version issue
 if ! grep -q "CMAKE_POLICY_VERSION_MINIMUM" include/cmake.mk; then
   echo 'CMAKE_OPTIONS += -DCMAKE_POLICY_VERSION_MINIMUM=3.5' >> include/cmake.mk
-    #!/bin/bash
-
 
 
 #修复go
