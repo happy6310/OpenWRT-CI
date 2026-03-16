@@ -1,6 +1,7 @@
 #设备平台
 CONFIG_TARGET_qualcommax=y
 CONFIG_TARGET_qualcommax_ipq60xx=y
+
 #设备列表
 #CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_anysafe_e1=y
 #CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_cmiot_ax18=y
@@ -8,7 +9,7 @@ CONFIG_TARGET_qualcommax_ipq60xx=y
 #CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_glinet_gl-axt1800=y
 
 CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_jdcloud_re-cs-02=y
-#CONFIG_TARGET_DEVICE_PACKAGES_qualcommax_ipq60xx_DEVICE_jdcloud_re-cs-02="ipq-wifi-jdcloud_re-cs-02 kmod-ath11k-pci ath11k-firmware-qcn9074 luci-app-athena-led luci-i18n-athena-led-zh-cn luci-app-cupsd"
+CONFIG_TARGET_DEVICE_PACKAGES_qualcommax_ipq60xx_DEVICE_jdcloud_re-cs-02="ipq-wifi-jdcloud_re-cs-02 kmod-ath11k-pci ath11k-firmware-qcn9074 luci-app-athena-led luci-i18n-athena-led-zh-cn luci-app-cupsd"
 
 # 缺少
 # luci-app-athena-led luci-i18n-athena-led-zh-cn luci-app-cupsd"
