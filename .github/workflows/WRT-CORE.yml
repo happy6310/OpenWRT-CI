@@ -162,6 +162,7 @@ jobs:
         run: |
           cd ./wrt/
 
+          echo "Using repository: $WRT_REPO"
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 

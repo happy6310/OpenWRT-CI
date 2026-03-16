@@ -72,7 +72,7 @@ UPDATE_PACKAGE "luci-app-ipsec-server" "Ivaneus/luci-app-ipsec-server" "main"
 
 # 网络测试 speedtest-cli 以及 vlmcsd
 UPDATE_PACKAGE "speedtest-cli luci-app-netspeedtest \
-                 vlmcsd luci-app-vlmcsd \
+                #   vlmcsd luci-app-vlmcsd \
                  luci-app-socat \
                  " "https://github.com/sbwml/openwrt_pkgs.git" "main" "pkg"
 
@@ -123,8 +123,8 @@ provided_config_lines=(
     "CONFIG_PACKAGE_wireguard-tools=y"
     "CONFIG_PACKAGE_luci-proto-wireguard=y"
     ########
-    "CONFIG_PACKAGE_vlmcsd=y"
-    "CONFIG_PACKAGE_luci-app-vlmcsd=y"
+    # "CONFIG_PACKAGE_vlmcsd=y"
+    # "CONFIG_PACKAGE_luci-app-vlmcsd=y"
     ######## 
     "CONFIG_PACKAGE_luci-app-ipsec-server=y"
     "CONFIG_PACKAGE_luci-app-socat=y"
