@@ -72,12 +72,10 @@ UPDATE_PACKAGE "luci-app-ipsec-server" "Ivaneus/luci-app-ipsec-server" "main"
 
 # 网络测试 speedtest-cli 以及 vlmcsd
 UPDATE_PACKAGE "speedtest-cli luci-app-netspeedtest \
-                #   vlmcsd luci-app-vlmcsd \
                  luci-app-socat \
                  " "https://github.com/sbwml/openwrt_pkgs.git" "main" "pkg"
 
 UPDATE_PACKAGE "cups luci-app-cupsd \
-                 vlmcsd luci-app-vlmcsd \
                  " "https://github.com/fichenx/openwrt-package" "main" "pkg"
 
 
@@ -114,29 +112,42 @@ provided_config_lines=(
     "CONFIG_PACKAGE_unzip=y"
     "CONFIG_PACKAGE_kmod-nft-tproxy=y"
     "CONFIG_PACKAGE_luci-compat=y"
-    ######## ttyd
+    ##### argon
+    "CONFIG_PACKAGE_luci-app-argon-config=y"
+    ##### vlmcsd
+    "CONFIG_PACKAGE_vlmcsd=y"
+    "CONFIG_PACKAGE_luci-app-vlmcsd=y"
+    ##### ttyd
     "CONFIG_PACKAGE_ttyd=y"
     "CONFIG_PACKAGE_luci-app-ttyd=y"
     "CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y"
-    ######## wireguard
+    ##### wireguard
     "CONFIG_PACKAGE_kmod-wireguard=y"
     "CONFIG_PACKAGE_wireguard-tools=y"
     "CONFIG_PACKAGE_luci-proto-wireguard=y"
-    ########
-    # "CONFIG_PACKAGE_vlmcsd=y"
-    # "CONFIG_PACKAGE_luci-app-vlmcsd=y"
-    ######## 
+    ##### 
+    "CONFIG_PACKAGE_luci-app-autoreboot=y"
+    ##### 自定义仓库
     "CONFIG_PACKAGE_luci-app-ipsec-server=y"
     "CONFIG_PACKAGE_luci-app-socat=y"
     "CONFIG_PACKAGE_luci-app-openclash=y"
     "CONFIG_PACKAGE_luci-app-bandix=y"
     "CONFIG_PACKAGE_luci-app-wolplus=y"
-    "CONFIG_PACKAGE_luci-app-autoreboot=y"
     "CONFIG_PACKAGE_luci-app-cupsd=y"
     "CONFIG_PACKAGE_luci-app-netspeedtest=y"
     #"CONFIG_PACKAGE_ddns-scripts=y"
     #"CONFIG_PACKAGE_ddns-scripts_cloudflare.com-v4=y"
 )
+
+
+# 为 ax6600 追加配置
+[[ $WRT_CONFIG == "ax6600"* ]] && provided_config_lines+=(
+    "CONFIG_PACKAGE_sqm-scripts-nss=y"
+    "CONFIG_PACKAGE_luci-app-sqm=y"
+    "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
+    "CONFIG_PACKAGE_luci-app-athena-led=y"
+)
+
 
 # 追加配置
 for line in "${provided_config_lines[@]}"; do
@@ -146,10 +157,14 @@ done
 # 修复 ttyd 为免密
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_ttyd-nopass.sh" "package/base-files/files/etc/uci-defaults/99_ttyd-nopass"
 
+
+
 # 修复 cmake 版本问题
 if ! grep -q "CMAKE_POLICY_VERSION_MINIMUM" include/cmake.mk; then
     echo 'CMAKE_OPTIONS += -DCMAKE_POLICY_VERSION_MINIMUM=3.5' >> include/cmake.mk
 fi
+
+
 
 
 # 在脚本末尾添加
@@ -167,15 +182,6 @@ chmod +x clash_meta
 rm -f clash-linux-arm64.tar.gz
 EOF
 chmod +x package/base-files/files/etc/uci-defaults/99-openclash-core
-
-
-# 为 ax6600 追加配置
-[[ $WRT_CONFIG == "ax6600"* ]] && provided_config_lines+=(
-    "CONFIG_PACKAGE_sqm-scripts-nss=y"
-    "CONFIG_PACKAGE_luci-app-sqm=y"
-    "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
-    "CONFIG_PACKAGE_luci-app-athena-led=y"
-)
 
 
 

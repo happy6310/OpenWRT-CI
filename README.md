@@ -97,3 +97,15 @@ OpenWRT-CI 是一个用于云编译 OpenWRT 固件的 CI 项目，特别针对 J
 ---
 
 [![Stargazers over time](https://starchart.cc/VIKINGYFY/OpenWRT-CI.svg?variant=adaptive)](https://starchart.cc/VIKINGYFY/OpenWRT-CI)
+
+
+
+
+https://github.com/immortalwrt/immortalwrt.git
+
+'packages' from 'https://github.com/immortalwrt/packages.git'
+'luci' from 'https://github.com/immortalwrt/luci.git'
+'routing' from 'https://github.com/openwrt/routing.git'
+'telephony' from 'https://github.com/openwrt/telephony.git'
+'video' from 'https://github.com/openwrt/video.git'
+
