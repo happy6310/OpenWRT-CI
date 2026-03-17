@@ -67,17 +67,24 @@ UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
 ####### 安装必要的应用
 
 # IPsec 服务器
-UPDATE_PACKAGE "luci-app-ipsec-server" "Ivaneus/luci-app-ipsec-server" "main"
+#UPDATE_PACKAGE "luci-app-ipsec-server" "Ivaneus/luci-app-ipsec-server" "main"
+#UPDATE_PACKAGE "luci-app-ipsec-vpnserver-manyusers" "https://github.com/Ivaneus/luci-app-ipsec-vpnserver-manyusers" "main"
+UPDATE_PACKAGE "luci-app-ipsec-vpnserver-manyusers" "https://github.com/immortalwrt/luci" "openwrt-21.02" "pkg"
+
 
 #small-package
-UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
-        naiveproxy v2ray-core v2ray-geodata v2ray-geoview v2ray-plugin \
-        tuic-client chinadns-ng ipt2socks tcping trojan-plus simple-obfs shadowsocksr-libev \
-        luci-app-passwall smartdns luci-app-smartdns v2dat mosdns luci-app-mosdns \
-        taskd luci-lib-xterm luci-lib-taskd luci-app-passwall2 \
-        luci-app-store quickstart luci-app-quickstart luci-app-istorex luci-app-cloudflarespeedtest \
-        luci-theme-argon netdata luci-app-netdata lucky luci-app-lucky luci-app-openclash mihomo \
-        luci-app-nikki frp luci-app-ddns-go ddns-go docker dockerd" "kenzok8/jell" "main" "pkg"
+# UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
+#         naiveproxy v2ray-core v2ray-geodata v2ray-geoview v2ray-plugin \
+#         tuic-client chinadns-ng ipt2socks tcping trojan-plus simple-obfs shadowsocksr-libev \
+#         luci-app-passwall smartdns luci-app-smartdns v2dat mosdns luci-app-mosdns \
+#         taskd luci-lib-xterm luci-lib-taskd luci-app-passwall2 \
+#         luci-app-store quickstart luci-app-quickstart luci-app-istorex luci-app-cloudflarespeedtest \
+#         luci-theme-argon netdata luci-app-netdata lucky luci-app-lucky luci-app-openclash mihomo \
+#         luci-app-nikki frp luci-app-ddns-go ddns-go docker dockerd" "kenzok8/jell" "main" "pkg"
+
+#small-package
+UPDATE_PACKAGE "luci-app-store" "kenzok8/jell" "main" "pkg"
+
 
 
 
@@ -201,9 +208,6 @@ provided_config_lines=(
     "CONFIG_PACKAGE_ttyd=y"
     "CONFIG_PACKAGE_luci-app-ttyd=y"
     #"CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y"
-    ##### luci-app-filebrowser 文件浏览器 (如果需要通过浏览器访问文件系统，可以考虑安装 luci-app-filebrowser)
-    "CONFIG_PACKAGE_luci-app-filebrowser=y"
-    #"CONFIG_PACKAGE_luci-i18n-filebrowser-zh-cn=y"
     ##### luci-app-filemanager  基于 Web 的文件管理 (如果需要更强大的文件管理功能，可以考虑安装 luci-app-filemanager)
     "CONFIG_PACKAGE_luci-app-filemanager=y"
     #"CONFIG_PACKAGE_luci-i18n-filemanager-zh-cn=y"
@@ -228,9 +232,6 @@ provided_config_lines=(
     ##### luci-app-package-manager 软件包管理器 (如果需要通过 LuCI 界面安装和管理软件包，可以考虑安装 luci-app-package-manager)
     "CONFIG_PACKAGE_luci-app-package-manager=y"
     #"CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y"
-    ##### luci-app-advanced-reboot 高级重启选项 (如果需要更多的重启选项，可以考虑安装 luci-app-advanced-reboot)
-    "CONFIG_PACKAGE_luci-app-advanced-reboot=y" 
-    #"CONFIG_PACKAGE_luci-i18n-advanced-reboot-zh-cn=y"
     ##### luci-app-advanced-wireless 高级无线设置 (如果需要更复杂的无线配置选项，可以考虑安装 luci-app-advanced-wireless)
     #"CONFIG_PACKAGE_luci-app-advanced-wireless=y"
     #"CONFIG_PACKAGE_luci-i18n-advanced-wireless-zh-cn=y"
@@ -244,7 +245,8 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-theme-argon=y"
     "CONFIG_PACKAGE_luci-app-argon-config=y"
     # 自定义 IPsec 服务器 (如果需要 IPsec VPN 功能，可以考虑安装 luci-app-ipsec-server)
-    "CONFIG_PACKAGE_luci-app-ipsec-server=y"
+    #"CONFIG_PACKAGE_luci-app-ipsec-server=y"
+    "CONFIG_PACKAGE_luci-app-ipsec-vpnserver-manyusers=y"
     ## socat 网络工具 (如果需要网络调试工具，可以考虑安装 luci-app-socat)
     "CONFIG_PACKAGE_luci-app-socat=y"
     ## openclash 基于 Clash 的透明代理 (如果需要科学上网功能，可以考虑安装 luci-app-openclash)
@@ -266,6 +268,10 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-sqm=y"
     "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
     "CONFIG_PACKAGE_sqm-scripts-nss=y"
+    # 开启 dockerman 插件 (如果需要 Docker 容器管理功能，可以考虑安装 luci-app-dockerman)
+    "CONFIG_PACKAGE_luci-app-dockerman=y"
+    # store 插件 (如果需要软件包存储功能，可以考虑安装 luci-app-store)
+    "CONFIG_PACKAGE_luci-app-store=y"
 )
 
 
@@ -274,13 +280,13 @@ for line in "${provided_config_lines[@]}"; do
     echo "$line" >> .config
 done
 
-
+# 第一部分：主题颜色修改
 find ./ -name "cascade.css" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
 find ./ -name "dark.css" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
 find ./ -name "cascade.less" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
 find ./ -name "dark.less" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
 
-
+# 第二部分：网络接口获取函数修复
 find ./ -name "getifaddr.c" -exec sed -i 's/return 1;/return 0;/g' {} \;
 
 
@@ -351,20 +357,46 @@ fi
 
 # 在脚本末尾添加
 # 自动下载 Clash 内核
-mkdir -p package/base-files/files/etc/openclash/core/
-cat > package/base-files/files/etc/uci-defaults/99-openclash-core << 'EOF'
+if [ -d ./package/luci-app-openclash ]; then
+    echo "OpenClash 已安装，准备下载内核..."
+    mkdir -p package/base-files/files/etc/openclash/core/
+    mkdir -p package/base-files/files/etc/uci-defaults/
+    
+    cat > package/base-files/files/etc/uci-defaults/99-openclash-core << 'EOF'
 #!/bin/sh
 # 下载 Clash 内核
+echo "正在下载 Clash 内核..."
 mkdir -p /etc/openclash/core/
-cd /etc/openclash/core/
-wget -O clash-linux-arm64.tar.gz https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz
-tar -xzf clash-linux-arm64.tar.gz
-mv clash-linux-arm64 clash_meta
-chmod +x clash_meta
-rm -f clash-linux-arm64.tar.gz
-EOF
-chmod +x package/base-files/files/etc/uci-defaults/99-openclash-core
+cd /etc/openclash/core/ || exit 1
 
+# 检查是否已存在内核文件
+if [ ! -f "clash_meta" ]; then
+    echo "开始下载 clash-linux-arm64.tar.gz..."
+    if wget -O clash-linux-arm64.tar.gz https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz; then
+        echo "下载成功，正在解压..."
+        if tar -xzf clash-linux-arm64.tar.gz; then
+            echo "解压成功，正在重命名..."
+            mv clash-linux-arm64 clash_meta
+            chmod +x clash_meta
+            rm -f clash-linux-arm64.tar.gz
+            echo "Clash 内核安装成功！"
+        else
+            echo "解压失败！"
+            rm -f clash-linux-arm64.tar.gz
+        fi
+    else
+        echo "下载失败！"
+    fi
+else
+    echo "Clash 内核已存在，跳过下载..."
+fi
+EOF
+
+    chmod +x package/base-files/files/etc/uci-defaults/99-openclash-core
+    echo "Clash 内核下载脚本已添加！"
+else
+    echo "OpenClash 未安装，跳过内核下载..."
+fi
 
 
 # =======================================================
