@@ -94,7 +94,7 @@ UPDATE_PACKAGE "luci-app-openclash" "vernesong/OpenClash" "dev" "pkg"
 UPDATE_PACKAGE "luci-app-wolplus" "VIKINGYFY/packages" "main"
 
 # Athena LED
-UPDATE_PACKAGE "luci-app-athena-led" "Sh1rokoDev/luci-app-athena-led" "LuCI2-JS"
+# UPDATE_PACKAGE "luci-app-athena-led" "Sh1rokoDev/luci-app-athena-led" "LuCI2-JS"
 
 
 
@@ -145,7 +145,6 @@ provided_config_lines=(
     "CONFIG_PACKAGE_sqm-scripts-nss=y"
     "CONFIG_PACKAGE_luci-app-sqm=y"
     "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
-    "CONFIG_PACKAGE_luci-app-athena-led=y"
 )
 
 
