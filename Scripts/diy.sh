@@ -69,6 +69,17 @@ UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
 # IPsec 服务器
 UPDATE_PACKAGE "luci-app-ipsec-server" "Ivaneus/luci-app-ipsec-server" "main"
 
+#small-package
+UPDATE_PACKAGE "xray-core xray-plugin dns2tcp dns2socks haproxy hysteria \
+        naiveproxy v2ray-core v2ray-geodata v2ray-geoview v2ray-plugin \
+        tuic-client chinadns-ng ipt2socks tcping trojan-plus simple-obfs shadowsocksr-libev \
+        luci-app-passwall smartdns luci-app-smartdns v2dat mosdns luci-app-mosdns \
+        taskd luci-lib-xterm luci-lib-taskd luci-app-passwall2 \
+        luci-app-store quickstart luci-app-quickstart luci-app-istorex luci-app-cloudflarespeedtest \
+        luci-theme-argon netdata luci-app-netdata lucky luci-app-lucky luci-app-openclash mihomo \
+        luci-app-nikki frp luci-app-ddns-go ddns-go docker dockerd" "kenzok8/jell" "main" "pkg"
+
+
 
 # 网络测试 speedtest-cli 以及 vlmcsd
 UPDATE_PACKAGE "speedtest-cli luci-app-netspeedtest \
@@ -81,6 +92,8 @@ UPDATE_PACKAGE "cups luci-app-cupsd \
 
 # UPDATE_PACKAGE "vlmcsd" "https://github.com/Wind4/vlmcsd.git" "master"
 
+# 
+UPDATE_PACKAGE "luci-app-advancedplus" "https://github.com/sirpdboy/luci-app-advancedplus" "main"
 
 
 # 带宽监控 bandix
@@ -96,23 +109,56 @@ UPDATE_PACKAGE "luci-app-wolplus" "VIKINGYFY/packages" "main"
 # Athena LED
 # UPDATE_PACKAGE "luci-app-athena-led" "Sh1rokoDev/luci-app-athena-led" "LuCI2-JS"
 
+####################
+
+
+# keywords_to_delete=(
+#     #"xiaomi_ax3600" "xiaomi_ax9000" "xiaomi_ax1800" "glinet" "jdcloud_ax6600" "linksys" "link_nn6600" "re-cs-02" "nn6600" "mr7350"
+#     "uugamebooster" "luci-app-wol" "luci-i18n-wol-zh-cn" "CONFIG_TARGET_INITRAMFS" "ddns"  "mihomo" "nikki"
+#     "smartdns" "kucat" "bootstrap" "kucat" "luci-app-partexp" "luci-app-upnp"
+# )
+
+# [[ $WRT_CONFIG == *"WIFI-NO"* ]] && keywords_to_delete+=("usb" "wpad" "hostapd")
+# [[ $WRT_CONFIG != *"EMMC"* ]] && keywords_to_delete+=("samba" "autosamba" "disk")
+
+# for keyword in "${keywords_to_delete[@]}"; do
+#     sed -i "/$keyword/d" ./.config
+# done
+
+
+
+
+####################
+ 
 
 
 # 配置项
 provided_config_lines=(
     # 基础工具和库
     "CONFIG_PACKAGE_bash=y"
-    "CONFIG_PACKAGE_dnsmasq-full=y"
-    "CONFIG_PACKAGE_curl=y"
-    "CONFIG_PACKAGE_ca-bundle=y"
-    "CONFIG_PACKAGE_ip-full=y"
+    # "CONFIG_PACKAGE_dnsmasq-full=y"
+    #"CONFIG_PACKAGE_curl=y"
+    #"CONFIG_PACKAGE_ca-bundle=y"
+     # iptables 防火墙
+    #"CONFIG_PACKAGE_iptables=y"
+    # IPv6 防火墙
+    #"CONFIG_PACKAGE_ip6tables=y"          
+    # 完整的 IP 工具
+    #"CONFIG_PACKAGE_ip-full=y"
     "CONFIG_PACKAGE_ruby=y"
     "CONFIG_PACKAGE_ruby-yaml=y"
-    "CONFIG_PACKAGE_kmod-tun=y"
-    "CONFIG_PACKAGE_kmod-inet-diag=y"
+    #"CONFIG_PACKAGE_kmod-tun=y"
+    #"CONFIG_PACKAGE_kmod-inet-diag=y"
     "CONFIG_PACKAGE_unzip=y"
-    "CONFIG_PACKAGE_kmod-nft-tproxy=y"
-    "CONFIG_PACKAGE_luci-compat=y"
+    #"CONFIG_PACKAGE_kmod-nft-tproxy=y"
+    #"CONFIG_PACKAGE_luci-compat=y"
+    #
+    # EXT4 文件系统支持"
+    "CONFIG_PACKAGE_kmod-fs-ext4=y"
+    # NTFS 文件系统支持"
+    "CONFIG_PACKAGE_kmod-fs-ntfs3=y"
+    # FAT 文件系统支持"
+    "CONFIG_PACKAGE_kmod-fs-vfat=y"
     ## 2. 网络基础与管理
     ##### luci-app-firewall 和 luci-app-firewall4 只能选一个，否则会有冲突，导致coremark错误
     "CONFIG_PACKAGE_luci-app-firewall=y"
@@ -162,19 +208,19 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-filemanager=y"
     #"CONFIG_PACKAGE_luci-i18n-filemanager-zh-cn=y"
     ##### luci-app-autoreboot 定时自动重启 (如果需要定期重启以保持系统稳定，可以考虑安装 luci-app-autoreboot)
-    "CONFIG_PACKAGE_luci-app-autoreboot=y"
-    "CONFIG_PACKAGE_luci-i18n-autoreboot-zh-cn=y"
+    #"CONFIG_PACKAGE_luci-app-autoreboot=y"
+    #"CONFIG_PACKAGE_luci-i18n-autoreboot-zh-cn=y"
     ##### luci-app-sqm SQM 流量管理 (如果需要流量整形或 QoS 功能，可以考虑安装 luci-app-sqm)
     "CONFIG_PACKAGE_luci-app-sqm=y"
-    "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
+    #"CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
     #
     #
     # 5. 存储与共享
     ##### luci-app-samba4 Samba 文件共享 (如果需要共享本地文件系统到 Windows 或 macOS 等系统，可以考虑安装 luci-app-samba4)
-    "CONFIG_PACKAGE_luci-app-samba4=y"
+    #"CONFIG_PACKAGE_luci-app-samba4=y"
     #"CONFIG_PACKAGE_luci-i18n-samba4-zh-cn=y"
     ##### luci-app-upnp UPnP 服务 (如果需要自动端口映射功能，可以考虑安装 luci-app-upnp)
-    "CONFIG_PACKAGE_luci-app-upnp=y"    
+    #"CONFIG_PACKAGE_luci-app-upnp=y"    
     #"CONFIG_PACKAGE_luci-i18n-upnp-zh-cn=y"
     #
     #
@@ -195,6 +241,7 @@ provided_config_lines=(
     #
     ##### 7.自定义仓库
     ##### argon 主题和配置 (如果需要美观的界面，可以考虑安装 luci-theme-argon 和 luci-app-argon-config)
+    "CONFIG_PACKAGE_luci-theme-argon=y"
     "CONFIG_PACKAGE_luci-app-argon-config=y"
     # 自定义 IPsec 服务器 (如果需要 IPsec VPN 功能，可以考虑安装 luci-app-ipsec-server)
     "CONFIG_PACKAGE_luci-app-ipsec-server=y"
@@ -208,6 +255,8 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-wolplus=y"
     ## netspeedtest 网络测速工具 (如果需要快速测试网络速度，可以考虑安装 luci-app-netspeedtest)
     "CONFIG_PACKAGE_luci-app-netspeedtest=y"
+    ## luci-app-advancedplus
+    "CONFIG_PACKAGE_luci-app-advancedplus=y"
 )
 
 
@@ -215,14 +264,8 @@ provided_config_lines=(
 [[ $WRT_CONFIG == "ax6600"* ]] && provided_config_lines+=(
     ## 开启 sqm-nss 插件 (如果需要 NSS 流量整形功能，可以考虑安装 luci-app-sqm)
     "CONFIG_PACKAGE_luci-app-sqm=y"
+    "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
     "CONFIG_PACKAGE_sqm-scripts-nss=y"
-    ## 设置 NSS 固件版本 (根据设备选择合适的版本，确保兼容性)
-    "CONFIG_NSS_FIRMWARE_VERSION_12_5=y"
-    "CONFIG_NSS_FIRMWARE_VERSION_12_2=n"
-    ## cupsd 打印服务器 (如果需要打印功能，可以考虑安装 luci-app-cupsd)
-    "CONFIG_PACKAGE_luci-app-cupsd=y"
-    ## 其他 ax6600 特定的配置项可以在这里添加
-
 )
 
 
@@ -231,14 +274,76 @@ for line in "${provided_config_lines[@]}"; do
     echo "$line" >> .config
 done
 
-# 修复 ttyd 为免密
+
+find ./ -name "cascade.css" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
+find ./ -name "dark.css" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
+find ./ -name "cascade.less" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
+find ./ -name "dark.less" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
+
+
+find ./ -name "getifaddr.c" -exec sed -i 's/return 1;/return 0;/g' {} \;
+
+
+#修改ttyd为免密
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_ttyd-nopass.sh" "package/base-files/files/etc/uci-defaults/99_ttyd-nopass"
 
+install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_set_argon_primary" "package/base-files/files/etc/uci-defaults/99_set_argon_primary"
+
+install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99-distfeeds.conf" "package/emortal/default-settings/files/99-distfeeds.conf"
+sed -i '/define Package\/default-settings\/install/a \
+\t$(INSTALL_DIR) $(1)/etc\n\t$(INSTALL_DATA) ./files/99-distfeeds.conf $(1)/etc/99-distfeeds.conf' \
+package/emortal/default-settings/Makefile
+
+sed -i "/exit 0/i\\
+[ -f \'/etc/99-distfeeds.conf\' ] && mv \'/etc/99-distfeeds.conf\' \'/etc/opkg/distfeeds.conf\'\n\
+sed -ri \'/check_signature/s@^[^#]@#&@\' /etc/opkg.conf\n" "package/emortal/default-settings/files/99-default-settings"
+
+#解决 dropbear 配置的 bug
+install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_dropbear_setup.sh" "package/base-files/files/etc/uci-defaults/99_dropbear_setup"
 
 
-# 修复 cmake 版本问题
+
+#fix makefile for apk
+if [ -f ./package/v2ray-geodata/Makefile ]; then
+    sed -i 's/VER)-\$(PKG_RELEASE)/VER)-r\$(PKG_RELEASE)/g' ./package/v2ray-geodata/Makefile
+fi
+if [ -f ./package/luci-lib-taskd/Makefile ]; then
+    sed -i 's/>=1\.0\.3-1/>=1\.0\.3-r1/g' ./package/luci-lib-taskd/Makefile
+fi
+if [ -f ./package/luci-app-openclash/Makefile ]; then
+    sed -i '/^PKG_VERSION:=/a PKG_RELEASE:=1' ./package/luci-app-openclash/Makefile
+fi
+if [ -f ./package/luci-app-quickstart/Makefile ]; then
+    # 把 PKG_VERSION:=x.y.z-n 拆成 PKG_VERSION:=x.y.z 和 PKG_RELEASE:=n
+    sed -i -E 's/PKG_VERSION:=([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)/PKG_VERSION:=\1\nPKG_RELEASE:=\2/' ./package/luci-app-quickstart/Makefile
+fi
+if [ -f ./package/luci-app-store/Makefile ]; then
+    # 把 PKG_VERSION:=x.y.z-n 拆成 PKG_VERSION:=x.y.z 和 PKG_RELEASE:=n
+    sed -i -E 's/PKG_VERSION:=([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)/PKG_VERSION:=\1\nPKG_RELEASE:=\2/' ./package/luci-app-store/Makefile
+fi
+
+
 if ! grep -q "CMAKE_POLICY_VERSION_MINIMUM" include/cmake.mk; then
     echo 'CMAKE_OPTIONS += -DCMAKE_POLICY_VERSION_MINIMUM=3.5' >> include/cmake.mk
+fi
+
+
+if [ -f ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init ]; then
+    cp ${GITHUB_WORKSPACE}/Scripts/ddns-go.init ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init
+	chmod +x ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init
+	echo "ddns-go.init has been replaced successfully."
+fi
+
+
+#修复 rust 编译
+RUST_FILE=$(find ./feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
+if [ -f "$RUST_FILE" ]; then
+	echo " "
+
+	sed -i 's/ci-llvm=true/ci-llvm=false/g' $RUST_FILE
+    patch $RUST_FILE ${GITHUB_WORKSPACE}/Scripts/rust-makefile.patch
+	
+	echo "rust has been fixed!"
 fi
 
 
@@ -262,29 +367,235 @@ chmod +x package/base-files/files/etc/uci-defaults/99-openclash-core
 
 
 
-# 安装 Go
-ensure_latest_go() {
-    echo "🔍 Installing Go..."
-    
-    # 使用固定版本的 Go，避免依赖外部 API
-    local GO_VERSION="1.25.6"
-    local URL="https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz"
-    echo "⬇️  Installing Go ${GO_VERSION} from ${URL}..."
+# =======================================================
+# 1. 解决 opkg 报错：正确补齐 dockerman 及其依赖
+# =======================================================
+echo "Handling Docker dependencies..."
 
-    # 流式下载并解压
-    if ! curl -fsSL "$URL" | sudo tar -C /usr/local -xzf -; then
-        echo "❌ Go installation failed."
+# 清理环境，防止残留冲突
+rm -rf package/feeds/luci/luci-app-dockerman
+rm -rf package/feeds/luci/luci-lib-docker
+rm -rf package/luci-app-dockerman
+rm -rf package/luci-lib-docker
+
+# 处理 luci-app-dockerman
+echo "Cloning luci-app-dockerman..."
+git clone --depth 1 https://github.com/lisaac/luci-app-dockerman.git temp_dockerman
+mv temp_dockerman/applications/luci-app-dockerman package/luci-app-dockerman
+rm -rf temp_dockerman
+
+# 处理 luci-lib-docker
+echo "Cloning luci-lib-docker..."
+git clone --depth 1 https://github.com/lisaac/luci-lib-docker.git temp_libdocker
+if [ -d "temp_libdocker/collections/luci-lib-docker" ]; then
+    mv temp_libdocker/collections/luci-lib-docker package/luci-lib-docker
+else
+    mv temp_libdocker package/luci-lib-docker
+fi
+rm -rf temp_libdocker
+
+# 移除 cgroupfs-mount 依赖
+if [ -f "package/luci-app-dockerman/Makefile" ]; then
+    echo "Removing cgroupfs-mount dependency..."
+    sed -i 's/+cgroupfs-mount //g' package/luci-app-dockerman/Makefile
+    sed -i 's/+cgroupfs-mount//g' package/luci-app-dockerman/Makefile
+fi
+
+# 安装必要依赖
+./scripts/feeds install ttyd
+./scripts/feeds install luci-lib-docker
+
+
+
+
+# =======================================================
+# 2. 修复 Docker 引擎 (dockerd) 和 CLI (docker)
+# =======================================================
+
+# 设定目标版本和固定的 Commit ID (对应 v29.2.1 正式版)
+DOCKER_VER="29.2.1"
+DOCKERD_COMMIT="4042ac6"
+DOCKER_CLI_COMMIT="33a5c92"
+
+# 动态定位 Makefile
+dockerd_makefile=$(find package/ feeds/ -name Makefile | xargs grep -l "PKG_NAME:=dockerd" | head -n 1)
+docker_makefile=$(find package/ feeds/ -name Makefile | xargs grep -l "PKG_NAME:=docker" | head -n 1)
+
+# --- 处理 dockerd ---
+if [ -f "$dockerd_makefile" ]; then
+    echo "Processing dockerd Makefile at: $dockerd_makefile"
+    # 修复版本号和 Commit
+    sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=$DOCKER_VER/" "$dockerd_makefile"
+    sed -i "s/PKG_GIT_SHORT_COMMIT:=.*/PKG_GIT_SHORT_COMMIT:=$DOCKERD_COMMIT/g" "$dockerd_makefile"
+    sed -i 's/^PKG_HASH:=.*/PKG_HASH:=skip/' "$dockerd_makefile"
+    
+    # 彻底重写 Build/Prepare。删除从 # Verify dependencies 到第一个 endef 之间的内容
+    # 然后重新插入一个标准的 Build/Prepare/Default 动作
+    sed -i '/define Build\/Prepare/,/endef/c\define Build\/Prepare\n\t$(Build\/Prepare\/Default)\nendef' "$dockerd_makefile"
+    
+    # 移除 Compile 阶段可能残留的强制校验 (EnsureVendored 系列调用)
+    sed -i 's/^\t$(call EnsureVendored/#\t$(call EnsureVendored/g' "$dockerd_makefile"
+fi
+
+# --- 处理 docker CLI ---
+if [ -f "$docker_makefile" ]; then
+    echo "Processing docker CLI Makefile at: $docker_makefile"
+    # 修复版本号和 Commit
+    sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=$DOCKER_VER/" "$docker_makefile"
+    sed -i "s/PKG_GIT_SHORT_COMMIT:=.*/PKG_GIT_SHORT_COMMIT:=$DOCKER_CLI_COMMIT/g" "$docker_makefile"
+    sed -i 's/^PKG_HASH:=.*/PKG_HASH:=skip/' "$docker_makefile"
+
+    # 彻底重写 Build/Prepare，防止其内部的 Shell 脚本语法报错
+    sed -i '/define Build\/Prepare/,/endef/c\define Build\/Prepare\n\t$(Build\/Prepare\/Default)\nendef' "$docker_makefile"
+fi
+
+echo "All Docker compilation fixes applied successfully!"
+
+
+
+
+# 修复 OpenWrt 包里不合规（非数字开头）的 PKG_VERSION，
+# 搜索范围：传入目录（默认 .）向下最多 3 层的所有 Makefile
+fix_openwrt_apk_versions() {
+  local ROOT="${1:-.}"
+  local MAX_DEPTH="${2:-3}"   # 可选：第二个参数可改最大深度，默认 3
+
+  log() { printf '[fix-apk] %s\n' "$*" >&2; }
+
+  process_file() {
+    local f="$1"
+
+    # 读取首个 PKG_VERSION
+    local line ver_raw
+    line="$(grep -m1 -E '^[[:space:]]*PKG_VERSION:=' "$f" || true)" || true
+    [[ -z "$line" ]] && return 0
+
+    ver_raw="$(sed -E 's/^[[:space:]]*PKG_VERSION:=[[:space:]]*//; s/[[:space:]]+$//' <<<"$line")"
+    ver_raw="${ver_raw%\"}"; ver_raw="${ver_raw#\"}"
+
+    # 已经是数字开头就无需修复
+    if [[ "$ver_raw" =~ ^[0-9] ]]; then
+      return 0
+    fi
+
+    # 提取数字（可含点）的第一段作为包版本
+    local ver_num
+    ver_num="$(grep -oE '[0-9]+([.][0-9]+)*' <<<"$ver_raw" | head -n1 || true)"
+    if [[ -z "$ver_num" ]]; then
+      log "WARN: $f 的 PKG_VERSION='$ver_raw' 无法提取数字，跳过。"
+      return 0
+    fi
+
+    log "修复 $f: PKG_VERSION '$ver_raw' -> '$ver_num'"
+    cp -n "$f" "$f.bak" 2>/dev/null || true
+
+    # 1) 替换首个 PKG_VERSION 为数字版本
+    sed -i -E "0,/^[[:space:]]*PKG_VERSION:=/ s//PKG_VERSION:=${ver_num}/" "$f"
+
+    # 2) 若无 PKG_SOURCE_VERSION，则在第一处 PKG_VERSION 行之后插入
+    if ! grep -qE '^[[:space:]]*PKG_SOURCE_VERSION:=' "$f"; then
+      awk -v raw="$ver_raw" '
+        BEGIN{added=0}
+        {
+          print $0
+          if (!added && $0 ~ /^[[:space:]]*PKG_VERSION:=/) {
+            print "PKG_SOURCE_VERSION:=" raw
+            added=1
+          }
+        }' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+    fi
+
+    # 3) 若无 PKG_BUILD_DIR，则在 PKG_SOURCE_VERSION 后面补一行
+    if ! grep -qE '^[[:space:]]*PKG_BUILD_DIR:=' "$f"; then
+      awk '
+        BEGIN{added=0}
+        {
+          print $0
+          if (!added && $0 ~ /^[[:space:]]*PKG_SOURCE_VERSION:=/) {
+            print "PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)"
+            added=1
+          }
+        }' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+    fi
+
+    # 4) 让 PKG_SOURCE / PKG_SOURCE_URL 里的 $(PKG_VERSION) 指向 $(PKG_SOURCE_VERSION)
+    sed -i -E '/^[[:space:]]*PKG_SOURCE:=/ s/\$\((PKG_VERSION)\)/$(PKG_SOURCE_VERSION)/g' "$f"
+    sed -i -E '/^[[:space:]]*PKG_SOURCE_URL:=/ s/\$\((PKG_VERSION)\)/$(PKG_SOURCE_VERSION)/g' "$f"
+  }
+
+  # 在 ROOT 下最多 3 层（或自定义 MAX_DEPTH）寻找所有 Makefile
+  while IFS= read -r -d '' mk; do
+    process_file "$mk"
+  done < <(find "$ROOT" -maxdepth "$MAX_DEPTH" -type f -name Makefile -print0)
+
+  log "扫描与修复完成。"
+}
+
+# opkg模式下不需要了
+#fix_openwrt_apk_versions package
+
+#fix cmake minimum version issue
+if ! grep -q "CMAKE_POLICY_VERSION_MINIMUM" include/cmake.mk; then
+  echo 'CMAKE_OPTIONS += -DCMAKE_POLICY_VERSION_MINIMUM=3.5' >> include/cmake.mk
+fi
+
+patch_openwrt_go() {
+    # 1. 确定 Makefile 路径 (通常在 feeds/packages/lang/golang/golang/Makefile)
+    # 使用 find 增加容错，防止目录结构略有不同
+    local GO_MAKEFILE
+    GO_MAKEFILE=$(find feeds -name "Makefile" | grep "lang/golang/golang/Makefile" | head -n 1)
+
+    if [ -z "$GO_MAKEFILE" ]; then
+        echo "❌ Error: Could not find OpenWrt Go Makefile!"
+        return 1
+    fi
+    echo "found go makefile: $GO_MAKEFILE"
+
+    # 2. 获取 Go 最新版本号 (例如 1.25.6)
+    local LATEST_VER
+    LATEST_VER="$(curl -s "https://go.dev/VERSION?m=text" | head -n 1 | tr -d '[:space:]' | sed 's/^go//')"
+    
+    if [ -z "$LATEST_VER" ]; then
+        echo "❌ Error: Failed to fetch latest Go version."
         return 1
     fi
 
-    # 写入 GITHUB_PATH，让后续 Steps 生效
-    echo "/usr/local/go/bin" >> "$GITHUB_PATH"
-    
-    # 让当前 step 后续命令也能用
-    export PATH="/usr/local/go/bin:$PATH"
-    
-    echo "✅ Successfully installed Go ${GO_VERSION}"
+    # 3. 检查当前 Makefile 里的版本
+    local CUR_VER
+    CUR_VER=$(grep "^PKG_VERSION:=" "$GO_MAKEFILE" | cut -d= -f2)
+    echo "Current OpenWrt Go version: $CUR_VER"
+    echo "Target Latest Go version:   $LATEST_VER"
+
+    if [ "$CUR_VER" == "$LATEST_VER" ]; then
+        echo "✅ Version is already up to date."
+        return 0
+    fi
+
+    # 4. 计算源码包的 SHA256 Hash (这是最关键的一步，不改 Hash 会导致下载校验失败)
+    # 注意：OpenWrt 编译 Go 用的是 src 包，不是 linux-amd64 包！
+    echo "☁️  Downloading source info to calculate hash..."
+    local SRC_URL="https://go.dev/dl/go${LATEST_VER}.src.tar.gz"
+    local NEW_HASH
+    NEW_HASH=$(curl -sL "$SRC_URL" | sha256sum | awk '{print $1}')
+
+    if [ -z "$NEW_HASH" ] || [ ${#NEW_HASH} -ne 64 ]; then
+        echo "❌ Error: Failed to calculate SHA256 hash."
+        return 1
+    fi
+    echo "New Hash: $NEW_HASH"
+
+    # 5. 使用 sed 修改 Makefile
+    echo "🔧 Patching Makefile..."
+    sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=$LATEST_VER/" "$GO_MAKEFILE"
+    sed -i "s/^PKG_HASH:=.*/PKG_HASH:=$NEW_HASH/" "$GO_MAKEFILE"
+
+    # 6. 验证修改
+    echo "--------------------------------------"
+    grep -E "^PKG_VERSION|^PKG_HASH" "$GO_MAKEFILE"
+    echo "--------------------------------------"
+    echo "✅ OpenWrt Go toolchain patched to $LATEST_VER successfully!"
 }
 
-# 执行函数
-ensure_latest_go
+# 执行补丁
+patch_openwrt_go || exit 1
+
