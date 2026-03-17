@@ -4,6 +4,7 @@ CONFIG_PACKAGE_luci-app-partexp=n
 CONFIG_PACKAGE_luci-app-samba4=y
 CONFIG_PACKAGE_luci-app-tailscale-community=n
 CONFIG_PACKAGE_luci-app-upnp=y
+CONFIG_PAKCAGE_luci-i18n-base-zh-cn=y
 
 #删除插件
 CONFIG_PACKAGE_luci-app-attendedsysupgrade=n

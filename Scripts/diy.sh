@@ -308,6 +308,14 @@ sed -ri \'/check_signature/s@^[^#]@#&@\' /etc/opkg.conf\n" "package/emortal/defa
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_dropbear_setup.sh" "package/base-files/files/etc/uci-defaults/99_dropbear_setup"
 
 
+# cd /tmp
+# # install luci-app-openclash, will try to get latest version later
+# #https://github.com/vernesong/OpenClash/releases
+# wget --no-check-certificate https://github.com/vernesong/OpenClash/releases/download/v0.45.02-beta/luci-app-openclash_0.45.02-beta_all.ipk -O luci-app-openclash_0.45.02-beta_all.ipk
+# opkg install /tmp/luci-app-openclash_*.ipk
+# rm -f /tmp/luci-app-openclash_*.ipk
+
+
 
 #fix makefile for apk
 if [ -f ./package/v2ray-geodata/Makefile ]; then
@@ -327,7 +335,6 @@ if [ -f ./package/luci-app-store/Makefile ]; then
     # 把 PKG_VERSION:=x.y.z-n 拆成 PKG_VERSION:=x.y.z 和 PKG_RELEASE:=n
     sed -i -E 's/PKG_VERSION:=([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)/PKG_VERSION:=\1\nPKG_RELEASE:=\2/' ./package/luci-app-store/Makefile
 fi
-
 
 if ! grep -q "CMAKE_POLICY_VERSION_MINIMUM" include/cmake.mk; then
     echo 'CMAKE_OPTIONS += -DCMAKE_POLICY_VERSION_MINIMUM=3.5' >> include/cmake.mk
@@ -352,51 +359,6 @@ if [ -f "$RUST_FILE" ]; then
 	echo "rust has been fixed!"
 fi
 
-
-
-
-# 在脚本末尾添加
-# 自动下载 Clash 内核
-if [ -d ./package/luci-app-openclash ]; then
-    echo "OpenClash 已安装，准备下载内核..."
-    mkdir -p package/base-files/files/etc/openclash/core/
-    mkdir -p package/base-files/files/etc/uci-defaults/
-    
-    cat > package/base-files/files/etc/uci-defaults/99-openclash-core << 'EOF'
-#!/bin/sh
-# 下载 Clash 内核
-echo "正在下载 Clash 内核..."
-mkdir -p /etc/openclash/core/
-cd /etc/openclash/core/ || exit 1
-
-# 检查是否已存在内核文件
-if [ ! -f "clash_meta" ]; then
-    echo "开始下载 clash-linux-arm64.tar.gz..."
-    if wget -O clash-linux-arm64.tar.gz https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz; then
-        echo "下载成功，正在解压..."
-        if tar -xzf clash-linux-arm64.tar.gz; then
-            echo "解压成功，正在重命名..."
-            mv clash-linux-arm64 clash_meta
-            chmod +x clash_meta
-            rm -f clash-linux-arm64.tar.gz
-            echo "Clash 内核安装成功！"
-        else
-            echo "解压失败！"
-            rm -f clash-linux-arm64.tar.gz
-        fi
-    else
-        echo "下载失败！"
-    fi
-else
-    echo "Clash 内核已存在，跳过下载..."
-fi
-EOF
-
-    chmod +x package/base-files/files/etc/uci-defaults/99-openclash-core
-    echo "Clash 内核下载脚本已添加！"
-else
-    echo "OpenClash 未安装，跳过内核下载..."
-fi
 
 
 # =======================================================
