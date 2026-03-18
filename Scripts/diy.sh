@@ -273,7 +273,7 @@ provided_config_lines=(
     # 开启 dockerman 插件 (如果需要 Docker 容器管理功能，可以考虑安装 luci-app-dockerman)
     #"CONFIG_PACKAGE_luci-app-dockerman=y"
     # store 插件 (如果需要软件包存储功能，可以考虑安装 luci-app-store)
-    "CONFIG_PACKAGE_luci-app-store=y"
+    # "CONFIG_PACKAGE_luci-app-store=y"
 )
 
 
