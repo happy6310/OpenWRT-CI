@@ -269,7 +269,7 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
     "CONFIG_PACKAGE_sqm-scripts-nss=y"
     # 开启 dockerman 插件 (如果需要 Docker 容器管理功能，可以考虑安装 luci-app-dockerman)
-    "CONFIG_PACKAGE_luci-app-dockerman=y"
+    #"CONFIG_PACKAGE_luci-app-dockerman=y"
     # store 插件 (如果需要软件包存储功能，可以考虑安装 luci-app-store)
     "CONFIG_PACKAGE_luci-app-store=y"
 )
@@ -405,44 +405,51 @@ fi
 # =======================================================
 # 2. 修复 Docker 引擎 (dockerd) 和 CLI (docker)
 # =======================================================
-
-# 设定目标版本和固定的 Commit ID (对应 v29.2.1 正式版)
+# --- 处理 Docker 相关组件 ---
+# 定义 Docker 版本和 Commit
 DOCKER_VER="29.2.1"
-DOCKERD_COMMIT="4042ac6"
-DOCKER_CLI_COMMIT="33a5c92"
+DOCKERD_COMMIT="730e6f2"
+DOCKER_CLI_COMMIT="730e6f2"
 
-# 动态定位 Makefile
+# 查找 dockerd 和 docker CLI 的 Makefile
 dockerd_makefile=$(find package/ feeds/ -name Makefile | xargs grep -l "PKG_NAME:=dockerd" | head -n 1)
 docker_makefile=$(find package/ feeds/ -name Makefile | xargs grep -l "PKG_NAME:=docker" | head -n 1)
 
-# --- 处理 dockerd ---
-if [ -f "$dockerd_makefile" ]; then
-    echo "Processing dockerd Makefile at: $dockerd_makefile"
-    # 修复版本号和 Commit
-    sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=$DOCKER_VER/" "$dockerd_makefile"
-    sed -i "s/PKG_GIT_SHORT_COMMIT:=.*/PKG_GIT_SHORT_COMMIT:=$DOCKERD_COMMIT/g" "$dockerd_makefile"
-    sed -i 's/^PKG_HASH:=.*/PKG_HASH:=skip/' "$dockerd_makefile"
+# --- 处理 dockerd --- 
+if [ -f "$dockerd_makefile" ]; then 
+    echo "Processing dockerd Makefile at: $dockerd_makefile" 
+    # 修复版本号和 Commit 
+    sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=$DOCKER_VER/" "$dockerd_makefile" 
+    sed -i "s/PKG_GIT_SHORT_COMMIT:=.*/PKG_GIT_SHORT_COMMIT:=$DOCKERD_COMMIT/g" "$dockerd_makefile" 
+    sed -i 's/^PKG_HASH:=.*/PKG_HASH:=skip/' "$dockerd_makefile" 
     
-    # 彻底重写 Build/Prepare。删除从 # Verify dependencies 到第一个 endef 之间的内容
-    # 然后重新插入一个标准的 Build/Prepare/Default 动作
-    sed -i '/define Build\/Prepare/,/endef/c\define Build\/Prepare\n\t$(Build\/Prepare\/Default)\nendef' "$dockerd_makefile"
+    # 修复下载 URL，使用正确的标签格式
+    sed -i "s/^PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=docker-$DOCKER_VER/" "$dockerd_makefile"
+    sed -i "s/^PKG_SOURCE:=.*/PKG_SOURCE:=moby-docker-$DOCKER_VER.tar.gz/" "$dockerd_makefile"
     
-    # 移除 Compile 阶段可能残留的强制校验 (EnsureVendored 系列调用)
-    sed -i 's/^\t$(call EnsureVendored/#\t$(call EnsureVendored/g' "$dockerd_makefile"
+    # 彻底重写 Build/Prepare。删除从 # Verify dependencies 到第一个 endef 之间的内容 
+    # 然后重新插入一个标准的 Build/Prepare/Default 动作 
+    sed -i '/define Build\/Prepare/,/endef/c\define Build\/Prepare\n\t$(Build\/Prepare\/Default)\nendef' "$dockerd_makefile" 
+    
+    # 移除 Compile 阶段可能残留的强制校验 (EnsureVendored 系列调用) 
+    sed -i 's/^\t$(call EnsureVendored/#\t$(call EnsureVendored/g' "$dockerd_makefile" 
+fi 
+
+# --- 处理 docker CLI --- 
+if [ -f "$docker_makefile" ]; then 
+    echo "Processing docker CLI Makefile at: $docker_makefile" 
+    # 修复版本号和 Commit 
+    sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=$DOCKER_VER/" "$docker_makefile" 
+    sed -i "s/PKG_GIT_SHORT_COMMIT:=.*/PKG_GIT_SHORT_COMMIT:=$DOCKER_CLI_COMMIT/g" "$docker_makefile" 
+    sed -i 's/^PKG_HASH:=.*/PKG_HASH:=skip/' "$docker_makefile" 
+
+    # 修复下载 URL，使用正确的标签格式
+    sed -i "s/^PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=docker-$DOCKER_VER/" "$docker_makefile"
+    sed -i "s/^PKG_SOURCE:=.*/PKG_SOURCE:=moby-docker-$DOCKER_VER.tar.gz/" "$docker_makefile"
+
+    # 彻底重写 Build/Prepare，防止其内部的 Shell 脚本语法报错 
+    sed -i '/define Build\/Prepare/,/endef/c\define Build\/Prepare\n\t$(Build\/Prepare\/Default)\nendef' "$docker_makefile" 
 fi
-
-# --- 处理 docker CLI ---
-if [ -f "$docker_makefile" ]; then
-    echo "Processing docker CLI Makefile at: $docker_makefile"
-    # 修复版本号和 Commit
-    sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=$DOCKER_VER/" "$docker_makefile"
-    sed -i "s/PKG_GIT_SHORT_COMMIT:=.*/PKG_GIT_SHORT_COMMIT:=$DOCKER_CLI_COMMIT/g" "$docker_makefile"
-    sed -i 's/^PKG_HASH:=.*/PKG_HASH:=skip/' "$docker_makefile"
-
-    # 彻底重写 Build/Prepare，防止其内部的 Shell 脚本语法报错
-    sed -i '/define Build\/Prepare/,/endef/c\define Build\/Prepare\n\t$(Build\/Prepare\/Default)\nendef' "$docker_makefile"
-fi
-
 echo "All Docker compilation fixes applied successfully!"
 
 
