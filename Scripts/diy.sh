@@ -85,6 +85,7 @@ UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
 #small-package
 UPDATE_PACKAGE "luci-app-ipsec-server \
                 taskd luci-lib-xterm luci-lib-taskd luci-app-store \
+                luci-app-webadmin \
                 " "https://github.com/kenzok8/jell" "main" "pkg"
 
 
@@ -292,15 +293,18 @@ find ./ -name "dark.less" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g
 find ./ -name "getifaddr.c" -exec sed -i 's/return 1;/return 0;/g' {} \;
 
 
-#修改ttyd为免密
+# 第三部分：ttyd 免密登录
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_ttyd-nopass.sh" "package/base-files/files/etc/uci-defaults/99_ttyd-nopass"
 
+# 第四部分：argon 主题设置为默认主题
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_set_argon_primary" "package/base-files/files/etc/uci-defaults/99_set_argon_primary"
 
+# 第五部分：自定义软件源配置
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99-distfeeds.conf" "package/emortal/default-settings/files/99-distfeeds.conf"
 sed -i '/define Package\/default-settings\/install/a \
 \t$(INSTALL_DIR) $(1)/etc\n\t$(INSTALL_DATA) ./files/99-distfeeds.conf $(1)/etc/99-distfeeds.conf' \
 package/emortal/default-settings/Makefile
+
 
 sed -i "/exit 0/i\\
 [ -f \'/etc/99-distfeeds.conf\' ] && mv \'/etc/99-distfeeds.conf\' \'/etc/opkg/distfeeds.conf\'\n\
@@ -316,7 +320,9 @@ if [ -f ./package/v2ray-geodata/Makefile ]; then
     sed -i 's/VER)-\$(PKG_RELEASE)/VER)-r\$(PKG_RELEASE)/g' ./package/v2ray-geodata/Makefile
 fi
 if [ -f ./package/luci-lib-taskd/Makefile ]; then
+    echo "luci-lib-taskd version: $(grep 'PKG_VERSION:=' ./package/luci-lib-taskd/Makefile)"
     sed -i 's/>=1\.0\.3-1/>=1\.0\.3-r1/g' ./package/luci-lib-taskd/Makefile
+    echo "luci-lib-taskd has been fixed!"
 fi
 if [ -f ./package/luci-app-openclash/Makefile ]; then
     sed -i '/^PKG_VERSION:=/a PKG_RELEASE:=1' ./package/luci-app-openclash/Makefile
@@ -326,8 +332,10 @@ if [ -f ./package/luci-app-quickstart/Makefile ]; then
     sed -i -E 's/PKG_VERSION:=([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)/PKG_VERSION:=\1\nPKG_RELEASE:=\2/' ./package/luci-app-quickstart/Makefile
 fi
 if [ -f ./package/luci-app-store/Makefile ]; then
+    echo "luci-app-store begin fix version: $(grep 'PKG_VERSION:=' ./package/luci-app-store/Makefile)"
     # 把 PKG_VERSION:=x.y.z-n 拆成 PKG_VERSION:=x.y.z 和 PKG_RELEASE:=n
     sed -i -E 's/PKG_VERSION:=([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)/PKG_VERSION:=\1\nPKG_RELEASE:=\2/' ./package/luci-app-store/Makefile
+    echo "luci-app-store has been fixed!"
 fi
 
 if ! grep -q "CMAKE_POLICY_VERSION_MINIMUM" include/cmake.mk; then
