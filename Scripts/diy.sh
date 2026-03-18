@@ -84,7 +84,7 @@ UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
 
 #small-package
 UPDATE_PACKAGE "luci-app-ipsec-server \
-                luci-lib-taskd luci-app-store \
+                taskd luci-lib-xterm luci-lib-taskd luci-app-store \
                 " "https://github.com/kenzok8/jell" "main" "pkg"
 
 
