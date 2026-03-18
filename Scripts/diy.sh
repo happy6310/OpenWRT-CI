@@ -69,7 +69,7 @@ UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
 # IPsec 服务器
 #UPDATE_PACKAGE "luci-app-ipsec-server" "Ivaneus/luci-app-ipsec-server" "main"
 #UPDATE_PACKAGE "luci-app-ipsec-vpnserver-manyusers" "https://github.com/Ivaneus/luci-app-ipsec-vpnserver-manyusers" "main"
-UPDATE_PACKAGE "luci-app-ipsec-vpnserver-manyusers" "https://github.com/immortalwrt/luci" "openwrt-21.02" "pkg"
+#UPDATE_PACKAGE "luci-app-ipsec-vpnserver-manyusers" "https://github.com/immortalwrt/luci" "openwrt-21.02" "pkg"
 
 
 #small-package
@@ -83,7 +83,7 @@ UPDATE_PACKAGE "luci-app-ipsec-vpnserver-manyusers" "https://github.com/immortal
 #         luci-app-nikki frp luci-app-ddns-go ddns-go docker dockerd" "kenzok8/jell" "main" "pkg"
 
 #small-package
-UPDATE_PACKAGE "luci-app-store" "kenzok8/jell" "main" "pkg"
+UPDATE_PACKAGE "luci-app-ipsec-server luci-app-store" "https://github.com/kenzok8/jell" "main" "pkg"
 
 
 
@@ -245,8 +245,8 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-theme-argon=y"
     "CONFIG_PACKAGE_luci-app-argon-config=y"
     # 自定义 IPsec 服务器 (如果需要 IPsec VPN 功能，可以考虑安装 luci-app-ipsec-server)
-    #"CONFIG_PACKAGE_luci-app-ipsec-server=y"
-    "CONFIG_PACKAGE_luci-app-ipsec-vpnserver-manyusers=y"
+    "CONFIG_PACKAGE_luci-app-ipsec-server=y"
+    #"CONFIG_PACKAGE_luci-app-ipsec-vpnserver-manyusers=y"
     ## socat 网络工具 (如果需要网络调试工具，可以考虑安装 luci-app-socat)
     "CONFIG_PACKAGE_luci-app-socat=y"
     ## openclash 基于 Clash 的透明代理 (如果需要科学上网功能，可以考虑安装 luci-app-openclash)
@@ -263,7 +263,7 @@ provided_config_lines=(
 
 
 # 为 ax6600 追加配置
-[[ $WRT_CONFIG == "ax6600"* ]] && provided_config_lines+=(
+[[ $WRT_CONFIG == *"ax6600"* ]] && provided_config_lines+=(
     ## 开启 sqm-nss 插件 (如果需要 NSS 流量整形功能，可以考虑安装 luci-app-sqm)
     "CONFIG_PACKAGE_luci-app-sqm=y"
     "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
