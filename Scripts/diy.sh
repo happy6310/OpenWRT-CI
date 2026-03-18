@@ -310,14 +310,6 @@ sed -ri \'/check_signature/s@^[^#]@#&@\' /etc/opkg.conf\n" "package/emortal/defa
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_dropbear_setup.sh" "package/base-files/files/etc/uci-defaults/99_dropbear_setup"
 
 
-# cd /tmp
-# # install luci-app-openclash, will try to get latest version later
-# #https://github.com/vernesong/OpenClash/releases
-# wget --no-check-certificate https://github.com/vernesong/OpenClash/releases/download/v0.45.02-beta/luci-app-openclash_0.45.02-beta_all.ipk -O luci-app-openclash_0.45.02-beta_all.ipk
-# opkg install /tmp/luci-app-openclash_*.ipk
-# rm -f /tmp/luci-app-openclash_*.ipk
-
-
 
 #fix makefile for apk
 if [ -f ./package/v2ray-geodata/Makefile ]; then
@@ -350,6 +342,10 @@ if [ -f ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init ]; then
 fi
 
 
+# 打印当前目录地址
+echo "当前目录: $(pwd)"
+
+
 
 # # install openclash Dev core 
 if [ -f ./package/luci-app-openclash/Makefile ]; then 
@@ -376,6 +372,12 @@ if [ -f ./package/luci-app-openclash/Makefile ]; then
 else 
     echo "未找到 luci-app-openclash 目录，跳过内核下载..." 
 fi
+# 打印当前目录地址
+echo "当前目录: $(pwd)"
+
+cd $GITHUB_WORKSPACE/wrt/
+# 打印切换后的目录地址
+echo "切换后目录: $(pwd)"
 
 
 
