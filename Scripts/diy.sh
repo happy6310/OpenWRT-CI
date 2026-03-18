@@ -83,7 +83,9 @@ UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
 #         luci-app-nikki frp luci-app-ddns-go ddns-go docker dockerd" "kenzok8/jell" "main" "pkg"
 
 #small-package
-UPDATE_PACKAGE "luci-app-ipsec-server luci-app-store" "https://github.com/kenzok8/jell" "main" "pkg"
+UPDATE_PACKAGE "luci-app-ipsec-server \
+                luci-lib-taskd luci-app-store \
+                " "https://github.com/kenzok8/jell" "main" "pkg"
 
 
 
