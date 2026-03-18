@@ -351,20 +351,18 @@ fi
 
 
 
-
-
-# # install openclash Dev core
-if [ -d *"luci-app-openclash"* ]; then 
+# # install openclash Dev core 
+if [ -f ./package/luci-app-openclash/Makefile ]; then 
     echo "开始下载 clash-linux-arm64.tar.gz..." 
-    # 创建目录时使用 sudo 获取权限
+    # 创建目录时使用 sudo 获取权限 
     sudo mkdir -p /etc/openclash/core/ 
     cd /etc/openclash/core/ 
-    # 移除 URL 中的反引号
+    # 移除 URL 中的反引号和分号
     if sudo wget -O clash-linux-arm64.tar.gz https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz; then 
         echo "下载成功，正在解压..." 
         if sudo tar -xzf clash-linux-arm64.tar.gz; then 
             echo "解压成功，正在重命名..." 
-            sudo mv clash-linux-arm64 clash_meta 
+            sudo mv clash clash_meta 
             sudo chmod +x clash_meta 
             sudo rm -f clash-linux-arm64.tar.gz 
             echo "Clash 内核安装成功！" 
@@ -375,6 +373,8 @@ if [ -d *"luci-app-openclash"* ]; then
     else 
         echo "下载失败！" 
     fi 
+else 
+    echo "未找到 luci-app-openclash 目录，跳过内核下载..." 
 fi
 
 
