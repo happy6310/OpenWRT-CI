@@ -271,6 +271,12 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-sqm=y"
     "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
     "CONFIG_PACKAGE_sqm-scripts-nss=y"
+    # 启用 opkg 包管理工具
+    "CONFIG_PACKAGE_opkg=y"
+    "CONFIG_PACKAGE_opkg-utils=y"
+    "CONFIG_PACKAGE_busybox=y"
+    "CONFIG_PACKAGE_update-system=y"
+    "CONFIG_PACKAGE_libopkg=y"
     # 开启 dockerman 插件 (如果需要 Docker 容器管理功能，可以考虑安装 luci-app-dockerman)
     #"CONFIG_PACKAGE_luci-app-dockerman=y"
     # store 插件 (如果需要软件包存储功能，可以考虑安装 luci-app-store)
@@ -347,6 +353,24 @@ if [ -f ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init ]; then
     cp ${GITHUB_WORKSPACE}/Scripts/ddns-go.init ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init
 	chmod +x ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init
 	echo "ddns-go.init has been replaced successfully."
+fi
+
+# 替换 ipsec-server.init
+if [ -f ./etc/init.d/luci-app-ipsec-server ]; then
+    echo "ipsec-server.init has been replaced successfully."
+    cp ${GITHUB_WORKSPACE}/Scripts/99_ipsec-server.init /etc/init.d/luci-app-ipsec-server
+
+    echo "添加 IPsec 服务器到 WAN 的转发规则 。使用ipsec 访问外网"
+    # 添加 IPsec 服务器到 WAN 的转发规则 。使用ipsec 访问外网
+    uci add firewall forwarding
+    uci set firewall.@forwarding[-1].src='ipsecserver'
+    uci set firewall.@forwarding[-1].dest='wan'
+
+    # 提交配置
+    uci commit firewall
+
+    # 重启防火墙
+    /etc/init.d/firewall restart
 fi
 
 
