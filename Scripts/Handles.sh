@@ -110,24 +110,3 @@ fi
 
 
 
-# # install openclash Dev core
-if [ -d *"luci-app-openclash"* ]; then
-	echo "开始下载 clash-linux-arm64.tar.gz..."
-	mkdir -p /etc/openclash/core/
-	cd /etc/openclash/core/
-	if wget -O clash-linux-arm64.tar.gz https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz; then
-		echo "下载成功，正在解压..."
-		if tar -xzf clash-linux-arm64.tar.gz; then
-			echo "解压成功，正在重命名..."
-			mv clash-linux-arm64 clash_meta
-			chmod +x clash_meta
-			rm -f clash-linux-arm64.tar.gz
-			echo "Clash 内核安装成功！"
-		else
-			echo "解压失败！"
-			rm -f clash-linux-arm64.tar.gz
-		fi
-	else
-		echo "下载失败！"
-	fi
-fi

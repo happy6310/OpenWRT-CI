@@ -197,7 +197,7 @@ provided_config_lines=(
     #"CONFIG_PACKAGE_luci-app-ufw=y"
     #"CONFIG_PACKAGE_luci-i18n-ufw-zh-cn=y"
     ##### luci-app-acl 访问控制列表 (如果需要基于 IP 或 MAC 地址的访问控制，可以考虑安装 luci-app-acl)
-    "CONFIG_PACKAGE_luci-app-acl=y"
+    #"CONFIG_PACKAGE_luci-app-acl=y"
     #"CONFIG_PACKAGE_luci-i18n-acl-zh-cn=y"
     ##### wireguard VPN 支持 (如果需要 VPN 功能，可以考虑安装 luci-app-wireguard)
     "CONFIG_PACKAGE_kmod-wireguard=y"
@@ -350,16 +350,33 @@ if [ -f ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init ]; then
 fi
 
 
-#修复 rust 编译
-RUST_FILE=$(find ./feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
-if [ -f "$RUST_FILE" ]; then
-	echo " "
 
-	sed -i 's/ci-llvm=true/ci-llvm=false/g' $RUST_FILE
-    patch $RUST_FILE ${GITHUB_WORKSPACE}/Scripts/rust-makefile.patch
-	
-	echo "rust has been fixed!"
+
+
+# # install openclash Dev core
+if [ -d *"luci-app-openclash"* ]; then 
+    echo "开始下载 clash-linux-arm64.tar.gz..." 
+    # 创建目录时使用 sudo 获取权限
+    sudo mkdir -p /etc/openclash/core/ 
+    cd /etc/openclash/core/ 
+    # 移除 URL 中的反引号
+    if sudo wget -O clash-linux-arm64.tar.gz https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz; then 
+        echo "下载成功，正在解压..." 
+        if sudo tar -xzf clash-linux-arm64.tar.gz; then 
+            echo "解压成功，正在重命名..." 
+            sudo mv clash-linux-arm64 clash_meta 
+            sudo chmod +x clash_meta 
+            sudo rm -f clash-linux-arm64.tar.gz 
+            echo "Clash 内核安装成功！" 
+        else 
+            echo "解压失败！" 
+            sudo rm -f clash-linux-arm64.tar.gz 
+        fi 
+    else 
+        echo "下载失败！" 
+    fi 
 fi
+
 
 
 
@@ -400,9 +417,6 @@ fi
 # 安装必要依赖
 ./scripts/feeds install ttyd
 ./scripts/feeds install luci-lib-docker
-
-
-
 
 # =======================================================
 # 2. 修复 Docker 引擎 (dockerd) 和 CLI (docker)
