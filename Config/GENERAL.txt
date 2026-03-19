@@ -10,9 +10,9 @@ CONFIG_PACKAGE_jq=y
 
 #增加插件
 CONFIG_PACKAGE_luci-app-autoreboot=y
-CONFIG_PACKAGE_luci-app-partexp=n
+# CONFIG_PACKAGE_luci-app-partexp=n
 CONFIG_PACKAGE_luci-app-samba4=y
-CONFIG_PACKAGE_luci-app-tailscale-community=n
+# CONFIG_PACKAGE_luci-app-tailscale-community=n
 CONFIG_PACKAGE_luci-app-upnp=y
 CONFIG_PAKCAGE_luci-i18n-base-zh-cn=y
 
@@ -124,43 +124,3 @@ CONFIG_PACKAGE_usbmuxd=n
 CONFIG_PACKAGE_usbutils=y
 CONFIG_PACKAGE_xz-utils=y
 
-
-
-##############
-
-
-
-# 通用必备工具 没有重复的？？
-# CONFIG_PACKAGE_apk-openssl=y
-# CONFIG_PACKAGE_base-files=y
-# CONFIG_PACKAGE_ca-bundle=y
-# CONFIG_PACKAGE_dnsmasq-full=y
-# CONFIG_PACKAGE_dropbear=y
-# CONFIG_PACKAGE_firewall4=y
-# CONFIG_PACKAGE_fstools=y
-# CONFIG_PACKAGE_kmod-gpio-button-hotplug=y
-# CONFIG_PACKAGE_kmod-leds-gpio=y
-# CONFIG_PACKAGE_libc=y
-# CONFIG_PACKAGE_libgcc=y
-# CONFIG_PACKAGE_libustream-openssl=y
-# CONFIG_PACKAGE_logd=y
-# CONFIG_PACKAGE_mtd=y
-# CONFIG_PACKAGE_netifd=y
-# CONFIG_PACKAGE_nftables=y
-# CONFIG_PACKAGE_odhcp6c=y
-# CONFIG_PACKAGE_odhcpd-ipv6only=y
-# CONFIG_PACKAGE_ppp=y
-# CONFIG_PACKAGE_ppp-mod-pppoe=y
-# CONFIG_PACKAGE_procd-ujail=y
-# CONFIG_PACKAGE_uboot-envtools=y
-# CONFIG_PACKAGE_uci=y
-# CONFIG_PACKAGE_uclient-fetch=y
-# CONFIG_PACKAGE_urandom-seed=y
-# CONFIG_PACKAGE_urngd=y
-# CONFIG_PACKAGE_wpad-openssl=y
-
-
-
-
-
- 
