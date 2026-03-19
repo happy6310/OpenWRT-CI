@@ -103,8 +103,8 @@ UPDATE_PACKAGE "cups luci-app-cupsd \
 # UPDATE_PACKAGE "vlmcsd" "https://github.com/Wind4/vlmcsd.git" "master"
 
 # 
-UPDATE_PACKAGE "luci-app-advancedplus" "https://github.com/sirpdboy/luci-app-advancedplus" "main"
-
+#UPDATE_PACKAGE "luci-app-advancedplus" "https://github.com/sirpdboy/luci-app-advancedplus" "main"
+UPDATE_PACKAGE "luci-app-advanced" "https://github.com/sirpdboy/luci-app-advanced" "main"
 
 # 带宽监控 bandix
 UPDATE_PACKAGE "openwrt-bandix" "timsaya/openwrt-bandix" "main"
@@ -261,7 +261,9 @@ provided_config_lines=(
     ## netspeedtest 网络测速工具 (如果需要快速测试网络速度，可以考虑安装 luci-app-netspeedtest)
     "CONFIG_PACKAGE_luci-app-netspeedtest=y"
     ## luci-app-advancedplus
-    "CONFIG_PACKAGE_luci-app-advancedplus=y"
+    #"CONFIG_PACKAGE_luci-app-advancedplus=y"
+    ## luci-app-advanced
+    "CONFIG_PACKAGE_luci-app-advanced=y"
 )
 
 
@@ -381,19 +383,18 @@ echo "当前目录: $(pwd)"
 
 
 
-# # install openclash Dev core 
-if [ -f ./package/luci-app-openclash/Makefile ]; then 
+# 自动下载 Clash 内核
+if [ -d ./package/luci-app-openclash ]; then 
     echo "开始下载 clash-linux-arm64.tar.gz..." 
     # 创建目录时使用 sudo 获取权限 
-    sudo mkdir -p /etc/openclash/core/ 
-    cd /etc/openclash/core/ 
+    mkdir -p package/base-files/files/etc/openclash/core/
     # 移除 URL 中的反引号和分号
-    if sudo wget -O clash-linux-arm64.tar.gz https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz; then 
+    if wget -O clash-linux-arm64.tar.gz https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz; then 
         echo "下载成功，正在解压..." 
-        if sudo tar -xzf clash-linux-arm64.tar.gz; then 
+        if tar -xzf clash-linux-arm64.tar.gz; then 
             echo "解压成功，正在重命名..." 
-            sudo mv clash clash_meta 
-            sudo chmod +x clash_meta 
+            sudo mv clash package/base-files/files/etc/openclash/core/clash_meta 
+            sudo chmod +x package/base-files/files/etc/openclash/core/clash_meta 
             sudo rm -f clash-linux-arm64.tar.gz 
             echo "Clash 内核安装成功！" 
         else 
