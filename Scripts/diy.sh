@@ -145,6 +145,7 @@ UPDATE_PACKAGE "luci-app-wolplus" "VIKINGYFY/packages" "main"
 # 配置项
 provided_config_lines=(
     # 基础工具和库
+    "CONFIG_PACKAGE_luci-app-opkg=y"
     "CONFIG_PACKAGE_bash=y"
     # "CONFIG_PACKAGE_dnsmasq-full=y"
     #"CONFIG_PACKAGE_curl=y"
@@ -233,7 +234,7 @@ provided_config_lines=(
     #
     # 6. 其他实用工具
     ##### luci-app-package-manager 软件包管理器 (如果需要通过 LuCI 界面安装和管理软件包，可以考虑安装 luci-app-package-manager)
-    "CONFIG_PACKAGE_luci-app-package-manager=y"
+    # "CONFIG_PACKAGE_luci-app-package-manager=y"
     #"CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y"
     ##### luci-app-advanced-wireless 高级无线设置 (如果需要更复杂的无线配置选项，可以考虑安装 luci-app-advanced-wireless)
     #"CONFIG_PACKAGE_luci-app-advanced-wireless=y"
@@ -275,9 +276,11 @@ provided_config_lines=(
     "CONFIG_PACKAGE_sqm-scripts-nss=y"
     # 启用 opkg 包管理工具
     "CONFIG_PACKAGE_opkg=y"
+    "CONFIG_PACKAGE_python3=y"
+    "CONFIG_PACKAGE_python3-pip=y"
+    "CONFIG_PACKAGE_ca-certificates=y"
     "CONFIG_PACKAGE_opkg-utils=y"
     "CONFIG_PACKAGE_busybox=y"
-    "CONFIG_PACKAGE_update-system=y"
     "CONFIG_PACKAGE_libopkg=y"
     # 开启 dockerman 插件 (如果需要 Docker 容器管理功能，可以考虑安装 luci-app-dockerman)
     #"CONFIG_PACKAGE_luci-app-dockerman=y"
