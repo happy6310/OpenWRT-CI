@@ -145,72 +145,11 @@ UPDATE_PACKAGE "luci-app-wolplus" "VIKINGYFY/packages" "main"
 # 配置项
 provided_config_lines=(
     # 基础工具和库
-    "CONFIG_PACKAGE_luci-app-opkg=y"
-    "CONFIG_PACKAGE_bash=y"
-    # "CONFIG_PACKAGE_dnsmasq-full=y"
-    #"CONFIG_PACKAGE_curl=y"
-    #"CONFIG_PACKAGE_ca-bundle=y"
-     # iptables 防火墙
-    #"CONFIG_PACKAGE_iptables=y"
-    # IPv6 防火墙
-    #"CONFIG_PACKAGE_ip6tables=y"          
-    # 完整的 IP 工具
-    #"CONFIG_PACKAGE_ip-full=y"
-    "CONFIG_PACKAGE_ruby=y"
-    "CONFIG_PACKAGE_ruby-yaml=y"
-    #"CONFIG_PACKAGE_kmod-tun=y"
-    #"CONFIG_PACKAGE_kmod-inet-diag=y"
-    "CONFIG_PACKAGE_unzip=y"
-    #"CONFIG_PACKAGE_kmod-nft-tproxy=y"
-    #"CONFIG_PACKAGE_luci-compat=y"
-    #
-    # EXT4 文件系统支持"
-    "CONFIG_PACKAGE_kmod-fs-ext4=y"
-    # NTFS 文件系统支持"
-    "CONFIG_PACKAGE_kmod-fs-ntfs3=y"
-    # FAT 文件系统支持"
-    "CONFIG_PACKAGE_kmod-fs-vfat=y"
-    ## 2. 网络基础与管理
-    ##### luci-app-firewall 和 luci-app-firewall4 只能选一个，否则会有冲突，导致coremark错误
-    "CONFIG_PACKAGE_luci-app-firewall=y"
-    #"CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y"
-    ##### luci-app-network 网络接口管理 (如果需要更复杂的网络配置，可以考虑安装 luci-app-advanced-reboot 或其他网络管理工具)
-    #"CONFIG_PACKAGE_luci-app-network=y"
-    #"CONFIG_PACKAGE_luci-i18n-network-zh-cn=y"
-    ##### luci-app-statistics 系统和网络流量监控 (如果需要更详细的性能监控，可以考虑安装 luci-app-statistics-mod 或其他性能监控工具)
-    "CONFIG_PACKAGE_luci-app-statistics=y"
-    #"CONFIG_PACKAGE_luci-i18n-statistics-zh-cn=y"
-    ##### luci-app-dnsmasq DNS 服务器和 DHCP 服务 (如果需要更高级的 DNS 功能，可以考虑安装 luci-app-dnscrypt-proxy 或其他 DNS 工具)
-    #"CONFIG_PACKAGE_luci-app-dnsmasq=y"
-    #"CONFIG_PACKAGE_luci-i18n-dnsmasq-zh-cn=y"
-    ##### luci-app-arpbind ARP 绑定 (如果需要静态 IP 绑定或防止 ARP 欺骗攻击，可以考虑安装 luci-app-arpbind)
-    "CONFIG_PACKAGE_luci-app-arpbind=y"
-    #"CONFIG_PACKAGE_luci-i18n-arpbind-zh-cn=y"
-    ##### luci-app-wireless 无线设置 (如果需要更复杂的无线配置，可以考虑安装 luci-app-advanced-wireless 或其他无线管理工具)
-    #"CONFIG_PACKAGE_luci-app-wireless=y"
-    #"CONFIG_PACKAGE_luci-i18n-wireless-zh-cn=y"
-    #
-    #
-    # 3. 远程访问与安全
-    ##### luci-app-sshd SSH 服务器 (如果需要远程命令行访问，可以考虑安装 luci-app-sshd)
-    "CONFIG_PACKAGE_luci-app-sshd=y"
-    #"CONFIG_PACKAGE_luci-i18n-sshd-zh-cn=y"
-    ##### luci-app-ufw 基于 UFW 的防火墙管理 (如果需要更简单的防火墙配置界面，可以考虑安装 luci-app-ufw)
-    #"CONFIG_PACKAGE_luci-app-ufw=y"
-    #"CONFIG_PACKAGE_luci-i18n-ufw-zh-cn=y"
-    ##### luci-app-acl 访问控制列表 (如果需要基于 IP 或 MAC 地址的访问控制，可以考虑安装 luci-app-acl)
-    #"CONFIG_PACKAGE_luci-app-acl=y"
-    #"CONFIG_PACKAGE_luci-i18n-acl-zh-cn=y"
-    ##### wireguard VPN 支持 (如果需要 VPN 功能，可以考虑安装 luci-app-wireguard)
-    "CONFIG_PACKAGE_kmod-wireguard=y"
-    "CONFIG_PACKAGE_wireguard-tools=y"
-    "CONFIG_PACKAGE_luci-proto-wireguard=y"
-    #
+    "CONFIG_PACKAGE_luci-app-webadmin=y"
     #
     # 4. 服务与工具
     ##### ttyd 基于 Web 的终端 (如果需要通过浏览器访问命令行，可以考虑安装 luci-app-ttyd)
-    "CONFIG_PACKAGE_ttyd=y"
-    "CONFIG_PACKAGE_luci-app-ttyd=y"
+
     #"CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y"
     ##### luci-app-filemanager  基于 Web 的文件管理 (如果需要更强大的文件管理功能，可以考虑安装 luci-app-filemanager)
     "CONFIG_PACKAGE_luci-app-filemanager=y"
@@ -219,26 +158,7 @@ provided_config_lines=(
     #"CONFIG_PACKAGE_luci-app-autoreboot=y"
     #"CONFIG_PACKAGE_luci-i18n-autoreboot-zh-cn=y"
     ##### luci-app-sqm SQM 流量管理 (如果需要流量整形或 QoS 功能，可以考虑安装 luci-app-sqm)
-    "CONFIG_PACKAGE_luci-app-sqm=y"
-    #"CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
-    #
-    #
-    # 5. 存储与共享
-    ##### luci-app-samba4 Samba 文件共享 (如果需要共享本地文件系统到 Windows 或 macOS 等系统，可以考虑安装 luci-app-samba4)
-    #"CONFIG_PACKAGE_luci-app-samba4=y"
-    #"CONFIG_PACKAGE_luci-i18n-samba4-zh-cn=y"
-    ##### luci-app-upnp UPnP 服务 (如果需要自动端口映射功能，可以考虑安装 luci-app-upnp)
-    #"CONFIG_PACKAGE_luci-app-upnp=y"    
-    #"CONFIG_PACKAGE_luci-i18n-upnp-zh-cn=y"
-    #
-    #
-    # 6. 其他实用工具
-    ##### luci-app-package-manager 软件包管理器 (如果需要通过 LuCI 界面安装和管理软件包，可以考虑安装 luci-app-package-manager)
-    # "CONFIG_PACKAGE_luci-app-package-manager=y"
-    #"CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y"
-    ##### luci-app-advanced-wireless 高级无线设置 (如果需要更复杂的无线配置选项，可以考虑安装 luci-app-advanced-wireless)
-    #"CONFIG_PACKAGE_luci-app-advanced-wireless=y"
-    #"CONFIG_PACKAGE_luci-i18n-advanced-wireless-zh-cn=y"
+    #"CONFIG_PACKAGE_luci-app-sqm=y"
     ##### vlmcsd KMS 服务器 (如果需要激活 Windows 或 Office 等软件，可以考虑安装 luci-app-vlmcsd)
     "CONFIG_PACKAGE_vlmcsd=y"
     "CONFIG_PACKAGE_luci-app-vlmcsd=y"
@@ -274,14 +194,9 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-sqm=y"
     "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
     "CONFIG_PACKAGE_sqm-scripts-nss=y"
-    # 启用 opkg 包管理工具
-    "CONFIG_PACKAGE_opkg=y"
-    "CONFIG_PACKAGE_python3=y"
-    "CONFIG_PACKAGE_python3-pip=y"
-    "CONFIG_PACKAGE_ca-certificates=y"
-    "CONFIG_PACKAGE_opkg-utils=y"
-    "CONFIG_PACKAGE_busybox=y"
-    "CONFIG_PACKAGE_libopkg=y"
+ 
+
+
     # 开启 dockerman 插件 (如果需要 Docker 容器管理功能，可以考虑安装 luci-app-dockerman)
     #"CONFIG_PACKAGE_luci-app-dockerman=y"
     # store 插件 (如果需要软件包存储功能，可以考虑安装 luci-app-store)
