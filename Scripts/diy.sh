@@ -355,22 +355,24 @@ if [ -f ./package/luci-app-ddns-go/ddns-go/file/ddns-go.init ]; then
 	echo "ddns-go.init has been replaced successfully."
 fi
 
-# 替换 ipsec-server.init
-if [ -f ./etc/init.d/luci-app-ipsec-server ]; then
+# 替换 ipsec-server
+if [ -f ./package/luci-app-ipsec-server/root/etc/init.d/luci-app-ipsec-server ]; then
     echo "ipsec-server.init has been replaced successfully."
-    cp ${GITHUB_WORKSPACE}/Scripts/99_ipsec-server.init /etc/init.d/luci-app-ipsec-server
+    cp -rf ${GITHUB_WORKSPACE}/Scripts/99_fix_ipsec_server.sh  ./package/luci-app-ipsec-server/root/etc/init.d/luci-app-ipsec-server
+    chmod +x ./package/luci-app-ipsec-server/root/etc/init.d/luci-app-ipsec-server
+    echo "ipsec-server.init has been replaced successfully."
 
-    echo "添加 IPsec 服务器到 WAN 的转发规则 。使用ipsec 访问外网"
-    # 添加 IPsec 服务器到 WAN 的转发规则 。使用ipsec 访问外网
-    uci add firewall forwarding
-    uci set firewall.@forwarding[-1].src='ipsecserver'
-    uci set firewall.@forwarding[-1].dest='wan'
+    # echo "添加 IPsec 服务器到 WAN 的转发规则 。使用ipsec 访问外网"
+    # # 添加 IPsec 服务器到 WAN 的转发规则 。使用ipsec 访问外网
+    # uci add firewall forwarding
+    # uci set firewall.@forwarding[-1].src='ipsecserver'
+    # uci set firewall.@forwarding[-1].dest='wan'
 
-    # 提交配置
-    uci commit firewall
+    # # 提交配置
+    # uci commit firewall
 
-    # 重启防火墙
-    /etc/init.d/firewall restart
+    # # 重启防火墙
+    # /etc/init.d/firewall restart
 fi
 
 
