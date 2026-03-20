@@ -1,14 +1,21 @@
+## 防火墙
+CONFIG_PACKAGE_firewall=n
+CONFIG_PACKAGE_firewall4=y
+
+
 CONFIG_PACKAGE_nano=y
+
+
 CONFIG_OPKG_USE_CURL=y
 CONFIG_PACKAGE_opkg=y
 CONFIG_USE_APK=n
 
+# 
 CONFIG_COREMARK_OPTIMIZE_O3=y
 CONFIG_COREMARK_ENABLE_MULTITHREADING=y
 CONFIG_COREMARK_NUMBER_OF_THREADS=6
 
-CONFIG_PACKAGE_luci-app-cpufreq=y
-CONFIG_PACKAGE_luci-i18n-cpufreq-zh-cn=y
+
 
 
 # 基本依赖
@@ -30,12 +37,14 @@ CONFIG_PACKAGE_ttyd=y
 CONFIG_PACKAGE_luci-app-ttyd=y
 
 # 
-CONFIG_PACKAGE_python3=y
-CONFIG_PACKAGE_python3-setuptools=y
-CONFIG_PACKAGE_python3-pip=y
+# CONFIG_PACKAGE_python3=y
+# CONFIG_PACKAGE_python3-setuptools=y
+# CONFIG_PACKAGE_python3-pip=y
 
 #增加插件
 CONFIG_PACKAGE_luci-app-autoreboot=y
+CONFIG_PACKAGE_luci-app-cpufreq=y
+
 # CONFIG_PACKAGE_luci-app-partexp=n
 # CONFIG_PACKAGE_luci-app-samba4=y
 # CONFIG_PACKAGE_luci-app-tailscale-community=n
