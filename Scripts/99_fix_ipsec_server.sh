@@ -52,13 +52,14 @@ fw4_rule() {
 		uci set firewall.ipsec_vpn_esp.family="ipv4"
 
 		# - IPSec NAT规则（MASQUERADE）
-		uci set firewall.ipsec_vpn_nat="redirect"
+		uci set firewall.ipsec_vpn_nat="nat"
 		uci set firewall.ipsec_vpn_nat.name="${ipt_flag}-NAT"
 		uci set firewall.ipsec_vpn_nat.src="ipsecserver"
-		uci set firewall.ipsec_vpn_nat.src_ip="${vt_clientip}"
+		#uci set firewall.ipsec_vpn_nat.src_ip="${vt_clientip}"
 		uci set firewall.ipsec_vpn_nat.target="MASQUERADE"
 		uci set firewall.ipsec_vpn_nat.srcnat="1"
 		uci set firewall.ipsec_vpn_nat.family="ipv4"
+		uci set firewall.ipsec_vpn_nat.dest='wan'
 
 		# - IPSec转发规则
 		uci set firewall.ipsec_vpn_forward="rule"

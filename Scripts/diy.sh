@@ -210,14 +210,13 @@ for line in "${provided_config_lines[@]}"; do
 done
 
 # 第一部分：主题颜色修改
-find ./ -name "cascade.css" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
-find ./ -name "dark.css" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
-find ./ -name "cascade.less" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
-find ./ -name "dark.less" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
+# find ./ -name "cascade.css" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
+# find ./ -name "dark.css" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
+# find ./ -name "cascade.less" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
+# find ./ -name "dark.less" -exec sed -i 's/#5e72e4/#31A1A1/g; s/#483d8b/#31A1A1/g' {} \;
 
 # 第二部分：网络接口获取函数修复
 find ./ -name "getifaddr.c" -exec sed -i 's/return 1;/return 0;/g' {} \;
-
 
 # 第三部分：ttyd 免密登录
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_ttyd-nopass.sh" "package/base-files/files/etc/uci-defaults/99_ttyd-nopass"
@@ -225,16 +224,31 @@ install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_ttyd-nopass.sh" "package/base-fil
 # 第四部分：argon 主题设置为默认主题
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_set_argon_primary" "package/base-files/files/etc/uci-defaults/99_set_argon_primary"
 
-# 第五部分：自定义软件源配置
-install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99-distfeeds.conf" "package/emortal/default-settings/files/99-distfeeds.conf"
-sed -i '/define Package\/default-settings\/install/a \
-\t$(INSTALL_DIR) $(1)/etc\n\t$(INSTALL_DATA) ./files/99-distfeeds.conf $(1)/etc/99-distfeeds.conf' \
-package/emortal/default-settings/Makefile
 
 
-sed -i "/exit 0/i\\
-[ -f \'/etc/99-distfeeds.conf\' ] && mv \'/etc/99-distfeeds.conf\' \'/etc/opkg/distfeeds.conf\'\n\
-sed -ri \'/check_signature/s@^[^#]@#&@\' /etc/opkg.conf\n" "package/emortal/default-settings/files/99-default-settings"
+
+# 1️⃣ /etc/opkg.conf 中将 option check_signature 前面加 #
+if [ -f ./package/luci-app-ipsec-server/root/etc/opkg.conf ]; then
+    sed -i '/^\s*option check_signature/ s/^/#/' ./package/luci-app-ipsec-server/root/etc/opkg.conf
+fi
+
+# 2️⃣ /etc/opkg/customfeeds.conf 末尾追加源
+# if [ -f ./package/luci-app-ipsec-server/root/etc/opkg/customfeeds.conf ]; then
+cp -rf ${GITHUB_WORKSPACE}/Scripts/99-distfeeds.conf ./package/luci-app-ipsec-server/root/etc/opkg/customfeeds.conf
+#     cat <<'EOF' >> ./package/luci-app-ipsec-server/root/etc/opkg/customfeeds.conf
+# src/gz openwrt_base https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/base/
+# src/gz openwrt_luci https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/luci/
+# src/gz openwrt_packages https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/packages
+# src/gz openwrt_routing https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/routing
+# src/gz openwrt_telephony https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/telephony
+# EOF
+# fi
+
+# 3️⃣ /etc/opkg/distfeeds.conf 每行前面加 #
+if [ -f ./package/luci-app-ipsec-server/root/etc/opkg/distfeeds.conf ]; then
+    sed -i 's/^/#/' ./package/luci-app-ipsec-server/root/etc/opkg/distfeeds.conf
+fi
+
 
 #解决 dropbear 配置的 bug
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_dropbear_setup.sh" "package/base-files/files/etc/uci-defaults/99_dropbear_setup"
