@@ -194,7 +194,9 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-sqm=y"
     "CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y"
     "CONFIG_PACKAGE_sqm-scripts-nss=y"
- 
+    "CONFIG_ATH11K_THERMAL=y"
+
+
 
 
     # 开启 dockerman 插件 (如果需要 Docker 容器管理功能，可以考虑安装 luci-app-dockerman)
@@ -227,33 +229,103 @@ install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_set_argon_primary" "package/base-
 
 
 
-# 1️⃣ /etc/opkg.conf 中将 option check_signature 前面加 #
-if [ -f ./package/luci-app-ipsec-server/root/etc/opkg.conf ]; then
-    sed -i '/^\s*option check_signature/ s/^/#/' ./package/luci-app-ipsec-server/root/etc/opkg.conf
-fi
-
-# 2️⃣ /etc/opkg/customfeeds.conf 末尾追加源
-# if [ -f ./package/luci-app-ipsec-server/root/etc/opkg/customfeeds.conf ]; then
-cp -rf ${GITHUB_WORKSPACE}/Scripts/99-distfeeds.conf ./package/luci-app-ipsec-server/root/etc/opkg/customfeeds.conf
-#     cat <<'EOF' >> ./package/luci-app-ipsec-server/root/etc/opkg/customfeeds.conf
-# src/gz openwrt_base https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/base/
-# src/gz openwrt_luci https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/luci/
-# src/gz openwrt_packages https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/packages
-# src/gz openwrt_routing https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/routing
-# src/gz openwrt_telephony https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/telephony
-# EOF
+# # 1️⃣ /etc/opkg.conf 中将 option check_signature 前面加 #
+# if [ -f ./package/luci-app-ipsec-server/root/etc/opkg.conf ]; then
+#     sed -i '/^\s*option check_signature/ s/^/#/' ./package/luci-app-ipsec-server/root/etc/opkg.conf
 # fi
 
-# 3️⃣ /etc/opkg/distfeeds.conf 每行前面加 #
-if [ -f ./package/luci-app-ipsec-server/root/etc/opkg/distfeeds.conf ]; then
-    sed -i 's/^/#/' ./package/luci-app-ipsec-server/root/etc/opkg/distfeeds.conf
-fi
+# # 2️⃣ /etc/opkg/customfeeds.conf 末尾追加源
+# # if [ -f ./package/luci-app-ipsec-server/root/etc/opkg/customfeeds.conf ]; then
+# cp -rf ${GITHUB_WORKSPACE}/Scripts/99-distfeeds.conf ./package/luci-app-ipsec-server/root/etc/opkg/customfeeds.conf
+# #     cat <<'EOF' >> ./package/luci-app-ipsec-server/root/etc/opkg/customfeeds.conf
+# # src/gz openwrt_base https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/base/
+# # src/gz openwrt_luci https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/luci/
+# # src/gz openwrt_packages https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/packages
+# # src/gz openwrt_routing https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/routing
+# # src/gz openwrt_telephony https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/telephony
+# # EOF
+# # fi
+
+# # 3️⃣ /etc/opkg/distfeeds.conf 每行前面加 #
+# if [ -f ./package/luci-app-ipsec-server/root/etc/opkg/distfeeds.conf ]; then
+#     sed -i 's/^/#/' ./package/luci-app-ipsec-server/root/etc/opkg/distfeeds.conf
+# fi
 
 
 #解决 dropbear 配置的 bug
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_dropbear_setup.sh" "package/base-files/files/etc/uci-defaults/99_dropbear_setup"
 
 
+
+######
+# 1. 强制解锁无线限值 (国家码/DFS/功率)
+sed -i 's/REGDOMAIN_GLOBAL/REGDOMAIN_US/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+
+
+# 创建初始化脚本
+mkdir -p package/base-files/files/etc/uci-defaults/
+cat <<EOF > package/base-files/files/etc/uci-defaults/99-init-config
+#!/bin/sh
+
+# 1. 无线优化 (AX6600 满血配置)
+uci set wireless.radio1.country='US'
+uci set wireless.radio1.channel='149'
+uci set wireless.radio1.htmode='HE160'
+uci set wireless.radio1.mu_beamformer='1'
+uci set wireless.radio1.vht_mu_mimo='1'
+uci set wireless.radio1.he_mu_edca='1'
+uci set wireless.radio1.doth='0'
+uci commit wireless
+
+# 2. opkg 软件源配置
+# 注释掉签名检查
+[ -f /etc/opkg.conf ] && sed -i '/^\s*option check_signature/ s/^/#/' /etc/opkg.conf
+
+# 追加自定义源
+cat <<EOT >> /etc/opkg/customfeeds.conf
+src/gz openwrt_base https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/base/
+src/gz openwrt_luci https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/luci/
+src/gz openwrt_packages https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/packages
+src/gz openwrt_routing https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/routing
+src/gz openwrt_telephony https://mirrors.vsean.net/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/telephony
+EOT
+
+# 注释掉默认发行版源 (distfeeds)
+[ -f /etc/opkg/distfeeds.conf ] && sed -i 's/^/#/' /etc/opkg/distfeeds.conf
+
+# 3. IPsec 服务器初始化配置
+uci set luci-app-ipsec-server.ipsec.enabled='1'
+# 检查是否已存在用户，不存在则添加
+if ! uci get luci-app-ipsec-server.@ipsec_users[0] >/dev/null 2>&1; then
+    uci add luci-app-ipsec-server ipsec_users
+fi
+uci set luci-app-ipsec-server.@ipsec_users[-1].enabled='1'
+uci set luci-app-ipsec-server.@ipsec_users[-1].username='admin'
+uci set luci-app-ipsec-server.@ipsec_users[-1].password='admin'
+uci commit luci-app-ipsec-server
+
+# 4. 应用设置并重启相关服务
+wifi
+/etc/init.d/luci-app-ipsec-server restart
+
+
+# # 5. 安装 dailycheckin 包 启动时可能没有网络，
+# opkg update
+# opkg install python3-light python3-pip
+# pip install dailycheckin --user
+
+# echo 'export PATH=$PATH:/root/.local/bin' >> /etc/profile
+# source /etc/profile
+# pip install dailycheckin --user --upgrade
+
+
+exit 0
+EOF
+
+# 给脚本执行权限
+chmod +x package/base-files/files/etc/uci-defaults/99-init-config
+
+#########
 
 #fix makefile for apk
 if [ -f ./package/v2ray-geodata/Makefile ]; then
