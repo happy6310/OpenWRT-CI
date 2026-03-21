@@ -86,6 +86,7 @@ UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
 UPDATE_PACKAGE "luci-app-ipsec-server \
                 taskd luci-lib-xterm luci-lib-taskd luci-app-store \
                 luci-app-webadmin \
+                luci-app-turboacc \
                 " "https://github.com/kenzok8/jell" "main" "pkg"
 
 
@@ -185,6 +186,7 @@ provided_config_lines=(
     #"CONFIG_PACKAGE_luci-app-advancedplus=y"
     ## luci-app-advanced
     "CONFIG_PACKAGE_luci-app-advanced=y"
+    "CONFIG_PACKAGE_luci-app-turboacc=y"
 )
 
 
