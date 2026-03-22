@@ -12,21 +12,29 @@ CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_jdcloud_re-cs-02=y
 
 
 #  无线固件包 会冲突 留一个ddwrt的
-CONFIG_PACKAGE_ath11k-firmware-ipq6018=y
-CONFIG_PACKAGE_ath11k-firmware-qcn9074=y
-CONFIG_PACKAGE_ath11k-firmware-ipq6018-ddwrt=n
-CONFIG_PACKAGE_ath11k-firmware-qcn9074-ddwrt=n
+#CONFIG_PACKAGE_ath11k-firmware-ipq6018=y
+#CONFIG_PACKAGE_ath11k-firmware-qcn9074=y
+#CONFIG_PACKAGE_ath11k-firmware-ipq6018-ddwrt=y
+#CONFIG_PACKAGE_ath11k-firmware-qcn9074-ddwrt=y
 
 
 
-# CONFIG_PACKAGE_wpad-openssl=y
-# CONFIG_PACKAGE_hostapd-common=y
-CONFIG_IPQ_MEM_PROFILE_1024=y
+
+#CONFIG_IPQ_MEM_PROFILE_1024=y
+#CONFIG_PACKAGE_kmod-qca-nss-drv=y
+#CONFIG_PACKAGE_kmod-qca-nss-ecm=y
+#CONFIG_PACKAGE_kmod-ath11k=y
+#CONFIG_PACKAGE_kmod-qca-nss-crypto=y
+#CONFIG_PACKAGE_kmod-qca-nss-cfi=y
+#CONFIG_PACKAGE_kmod-qca-nss-drv-pppoe=y
+#CONFIG_PACKAGE_kmod-qca-nss-drv-bridge-mgr=y
+#CONFIG_PACKAGE_kmod-qca-nss-drv-vlan-mgr=y
+#CONFIG_PACKAGE_kmod-qca-nss-node-mcast=y
+#CONFIG_PACKAGE_kmod-qca-nss-drv-wifi-meshmgr=y
+#CONFIG_PACKAGE_kmod-qca-nss-drv-bridge-mgr=y
+#CONFIG_ATH11K_MEM_PROFILE_1G=y
 
 
-# 3. 补齐 NSS 硬件加速配置 (确保吞吐量)
-CONFIG_PACKAGE_kmod-qca-nss-drv=y
-CONFIG_PACKAGE_kmod-qca-nss-ecm=y
 
 
 
@@ -44,22 +52,3 @@ CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_PDNSD=y
 # 除非你有特殊的 DNS 过滤需求，否则 PDNSD 足够了。
 #"CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_DNSPROXY=y"
 
-
-# 必须为 y，否则无线菜单里根本不会出现 160MHz 选项
-CONFIG_PACKAGE_kmod-ath11k=y
-
-# 确保硬件转发引擎完全开启
-CONFIG_PACKAGE_kmod-qca-nss-crypto=y
-CONFIG_PACKAGE_kmod-qca-nss-cfi=y
-# 如果你用拨号上网，这个极重要
-CONFIG_PACKAGE_kmod-qca-nss-drv-pppoe=y
-CONFIG_PACKAGE_kmod-qca-nss-drv-bridge-mgr=y
-CONFIG_PACKAGE_kmod-qca-nss-drv-vlan-mgr=y
-CONFIG_PACKAGE_kmod-qca-nss-node-mcast=y
-# 
-CONFIG_PACKAGE_kmod-qca-nss-drv-wifi-meshmgr=y
-CONFIG_PACKAGE_kmod-qca-nss-drv-bridge-mgr=y
-
-
-# CONFIG_ATH11K_MEM_PROFILE_512M=y
-CONFIG_ATH11K_MEM_PROFILE_1G=y
