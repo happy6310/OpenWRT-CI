@@ -28,7 +28,30 @@ CONFIG_IPQ_MEM_PROFILE_1024=y
 # 3. 补齐 NSS 硬件加速配置 (确保吞吐量)
 CONFIG_PACKAGE_kmod-qca-nss-drv=y
 CONFIG_PACKAGE_kmod-qca-nss-ecm=y
+
+
+
+# turboacc
 CONFIG_PACKAGE_luci-app-turboacc=y
+# 核心开关。启用后才能在界面看到流量分载选项
+CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_OFFLOADING=y
+# 已开启。配合内核中的 BBR 模块优化网络拥塞
+CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_BBR_CCA=y
+# 已开启。用于本地 DNS 缓存，加速网页打开速度。
+CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_PDNSD=y
+# 雅典娜有 NSS 加速，不需要这个。
+#"CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_SHORTCUT_FE=y"
+#"CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_SHORTCUT_FE_CM=y"
+# 除非你有特殊的 DNS 过滤需求，否则 PDNSD 足够了。
+#"CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_DNSPROXY=y"
+
+
+# 必须为 y，否则无线菜单里根本不会出现 160MHz 选项
+CONFIG_PACKAGE_kmod-ath11k=y
+CONFIG_ATH11K_MEM_PROFILE_HIGH=y
+
+
+
 # 确保硬件转发引擎完全开启
 CONFIG_PACKAGE_kmod-qca-nss-crypto=y
 CONFIG_PACKAGE_kmod-qca-nss-cfi=y
