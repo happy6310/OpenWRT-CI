@@ -52,3 +52,14 @@ CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_PDNSD=y
 # 除非你有特殊的 DNS 过滤需求，否则 PDNSD 足够了。
 #"CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_DNSPROXY=y"
 
+
+
+# 系统---> CPU 性能优化调节设置  (cpufreq)
+CONFIG_PACKAGE_luci-app-cpufreq=y
+
+
+# 网络--> 流量监控 (bandix)
+CONFIG_PACKAGE_luci-app-bandix=y
+
+# 网络---> 网络测试 （netspeedtest） 
+CONFIG_PACKAGE_luci-app-netspeedtest=y

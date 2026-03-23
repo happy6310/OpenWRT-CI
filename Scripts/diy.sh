@@ -101,11 +101,10 @@ UPDATE_PACKAGE "cups luci-app-cupsd \
                  " "https://github.com/fichenx/openwrt-package" "main" "pkg"
 
 
-# UPDATE_PACKAGE "vlmcsd" "https://github.com/Wind4/vlmcsd.git" "master"
 
 # 
 #UPDATE_PACKAGE "luci-app-advancedplus" "https://github.com/sirpdboy/luci-app-advancedplus" "main"
-UPDATE_PACKAGE "luci-app-advanced" "https://github.com/sirpdboy/luci-app-advanced" "main"
+UPDATE_PACKAGE "luci-app-advanced" "https://github.com/sirpdboy/luci-app-advanced" "master"
 
 # 带宽监控 bandix
 UPDATE_PACKAGE "openwrt-bandix" "timsaya/openwrt-bandix" "main"
@@ -161,8 +160,6 @@ provided_config_lines=(
     ##### luci-app-sqm SQM 流量管理 (如果需要流量整形或 QoS 功能，可以考虑安装 luci-app-sqm)
     #"CONFIG_PACKAGE_luci-app-sqm=y"
     ##### vlmcsd KMS 服务器 (如果需要激活 Windows 或 Office 等软件，可以考虑安装 luci-app-vlmcsd)
-    "CONFIG_PACKAGE_vlmcsd=y"
-    "CONFIG_PACKAGE_luci-app-vlmcsd=y"
     #
     #
     ##### 7.自定义仓库
@@ -176,12 +173,8 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-socat=y"
     ## openclash 基于 Clash 的透明代理 (如果需要科学上网功能，可以考虑安装 luci-app-openclash)
     "CONFIG_PACKAGE_luci-app-openclash=y"
-    ## bandix 带宽监控工具 (如果需要实时监控网络带宽，可以考虑安装 luci-app-bandix)
-    "CONFIG_PACKAGE_luci-app-bandix=y"
     ## WOL Plus Wake-on-LAN 增强工具 (如果需要更强大的远程唤醒功能，可以考虑安装 luci-app-wolplus)
     "CONFIG_PACKAGE_luci-app-wolplus=y"
-    ## netspeedtest 网络测速工具 (如果需要快速测试网络速度，可以考虑安装 luci-app-netspeedtest)
-    "CONFIG_PACKAGE_luci-app-netspeedtest=y"
     ## luci-app-advancedplus
     #"CONFIG_PACKAGE_luci-app-advancedplus=y"
     ## luci-app-advanced

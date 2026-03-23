@@ -1,5 +1,5 @@
 #CI项目
-name: OWRT-REDMI-AX6000官方版
+name: OWRT-REDMI-AX6000 owrt
 
 #CI计划
 on:
@@ -33,8 +33,11 @@ jobs:
       #max-parallel: 3
       matrix:
         CONFIG: [redmi-router-ax6000]
-        SOURCE: [immortalwrt/immortalwrt]
-        BRANCH: [openwrt-25.12]
+        # SOURCE: [immortalwrt/immortalwrt]
+        # BRANCH: [openwrt-25.12]
+        SOURCE: [VIKINGYFY/immortalwrt]
+        BRANCH: [owrt]
+        
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
