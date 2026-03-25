@@ -84,12 +84,12 @@ UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
 
 #small-package
 UPDATE_PACKAGE "luci-app-ipsec-server \
-                taskd luci-lib-xterm luci-lib-taskd luci-app-store \
                 luci-app-webadmin \
                 luci-app-turboacc \
                 " "https://github.com/kenzok8/jell" "main" "pkg"
 
 
+UPDATE_PACKAGE "luci-lib-xterm luci-lib-taskd luci-app-store" "https://github.com/linkease/istore" "main" "pkg"
 
 
 # 网络测试 speedtest-cli 以及 vlmcsd
@@ -194,10 +194,6 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-samba4=y"
     # store 插件 (如果需要软件包存储功能，可以考虑安装 luci-app-store)
     "CONFIG_PACKAGE_luci-app-store=y"
-
-
-
-
     # 开启 dockerman 插件 (如果需要 Docker 容器管理功能，可以考虑安装 luci-app-dockerman)
     #"CONFIG_PACKAGE_luci-app-dockerman=y"
     
@@ -329,14 +325,7 @@ chmod +x package/base-files/files/etc/uci-defaults/99-init-config
 if [ -f ./package/v2ray-geodata/Makefile ]; then
     sed -i 's/VER)-\$(PKG_RELEASE)/VER)-r\$(PKG_RELEASE)/g' ./package/v2ray-geodata/Makefile
 fi
-if [ -f ./package/luci-lib-taskd/Makefile ]; then
-    echo "luci-lib-taskd version: $(grep 'PKG_VERSION:=' ./package/luci-lib-taskd/Makefile)"
-    sed -i 's/>=1\.0\.3-1/>=1\.0\.3-r1/g' ./package/luci-lib-taskd/Makefile
-    # Set version to 1.0.19 to satisfy dependency
-    sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.0.19/' ./package/luci-lib-taskd/Makefile
-    sed -i '/PKG_VERSION:=1.0.19/a PKG_RELEASE:=1' ./package/luci-lib-taskd/Makefile
-    echo "luci-lib-taskd has been fixed!"
-fi
+
 if [ -f ./package/luci-app-openclash/Makefile ]; then
     sed -i '/^PKG_VERSION:=/a PKG_RELEASE:=1' ./package/luci-app-openclash/Makefile
 fi
@@ -344,12 +333,12 @@ if [ -f ./package/luci-app-quickstart/Makefile ]; then
     # 把 PKG_VERSION:=x.y.z-n 拆成 PKG_VERSION:=x.y.z 和 PKG_RELEASE:=n
     sed -i -E 's/PKG_VERSION:=([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)/PKG_VERSION:=\1\nPKG_RELEASE:=\2/' ./package/luci-app-quickstart/Makefile
 fi
-if [ -f ./package/luci-app-store/Makefile ]; then
-    echo "luci-app-store begin fix version: $(grep 'PKG_VERSION:=' ./package/luci-app-store/Makefile)"
-    # 把 PKG_VERSION:=x.y.z-n 拆成 PKG_VERSION:=x.y.z 和 PKG_RELEASE:=n
-    sed -i -E 's/PKG_VERSION:=([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)/PKG_VERSION:=\1\nPKG_RELEASE:=\2/' ./package/luci-app-store/Makefile
-    echo "luci-app-store has been fixed!"
-fi
+# if [ -f ./package/luci-app-store/Makefile ]; then
+#     echo "luci-app-store begin fix version: $(grep 'PKG_VERSION:=' ./package/luci-app-store/Makefile)"
+#     # 把 PKG_VERSION:=x.y.z-n 拆成 PKG_VERSION:=x.y.z 和 PKG_RELEASE:=n
+#     sed -i -E 's/PKG_VERSION:=([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)/PKG_VERSION:=\1\nPKG_RELEASE:=\2/' ./package/luci-app-store/Makefile
+#     echo "luci-app-store has been fixed!"
+# fi
 
 if ! grep -q "CMAKE_POLICY_VERSION_MINIMUM" include/cmake.mk; then
     echo 'CMAKE_OPTIONS += -DCMAKE_POLICY_VERSION_MINIMUM=3.5' >> include/cmake.mk
