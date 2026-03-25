@@ -17,9 +17,9 @@ CONFIG_PACKAGE_luci-proto-wireguard=y
 # 系统 - 定时重启
 CONFIG_PACKAGE_luci-app-autoreboot=y
 # 系统 - 磁盘管理
-CONFIG_PACKAGE_luci-app-diskman
+CONFIG_PACKAGE_luci-app-diskman=y
 # 休眠
-CONFIG_PACKAGE_luci-app-hd-idle
+CONFIG_PACKAGE_luci-app-hd-idle=y
 # 系统 - ttyd
 CONFIG_PACKAGE_ttyd=y
 CONFIG_PACKAGE_luci-app-ttyd=y
