@@ -334,6 +334,7 @@ if [ -f ./package/luci-lib-taskd/Makefile ]; then
     sed -i 's/>=1\.0\.3-1/>=1\.0\.3-r1/g' ./package/luci-lib-taskd/Makefile
     # Set version to 1.0.19 to satisfy dependency
     sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.0.19/' ./package/luci-lib-taskd/Makefile
+    sed -i '/PKG_VERSION:=1.0.19/a PKG_RELEASE:=1' ./package/luci-lib-taskd/Makefile
     echo "luci-lib-taskd has been fixed!"
 fi
 if [ -f ./package/luci-app-openclash/Makefile ]; then
