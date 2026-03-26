@@ -89,7 +89,7 @@ UPDATE_PACKAGE "luci-app-ipsec-server \
                 " "https://github.com/kenzok8/jell" "main" "pkg"
 
 
-UPDATE_PACKAGE "luci-lib-xterm luci-lib-taskd luci-app-store" "https://github.com/linkease/istore" "main" "pkg"
+UPDATE_PACKAGE "taskd luci-lib-xterm luci-lib-taskd luci-app-store" "https://github.com/linkease/istore" "main" "pkg"
 
 
 # 网络测试 speedtest-cli 以及 vlmcsd
@@ -193,6 +193,9 @@ provided_config_lines=(
     # samba 4 插件 文件太大，
     "CONFIG_PACKAGE_luci-app-samba4=y"
     # store 插件 (如果需要软件包存储功能，可以考虑安装 luci-app-store)
+    "CONFIG_PACKAGE_taskd=y"
+    "CONFIG_PACKAGE_luci-lib-taskterm=y"
+    "CONFIG_PACKAGE_luci-lib-xterm=y"
     "CONFIG_PACKAGE_luci-app-store=y"
     # 开启 dockerman 插件 (如果需要 Docker 容器管理功能，可以考虑安装 luci-app-dockerman)
     #"CONFIG_PACKAGE_luci-app-dockerman=y"
