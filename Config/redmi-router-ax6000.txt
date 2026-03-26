@@ -76,9 +76,14 @@ CONFIG_PACKAGE_kmod-crypto-hw-safexcel=y
 CONFIG_PACKAGE_kmod-nf-nathelper=y
 CONFIG_PACKAGE_kmod-nf-nathelper-extra=y
 CONFIG_PACKAGE_kmod-phy-aquantia=y
+# 驱动程序 (保留现状) 
 CONFIG_PACKAGE_kmod-mt7915e=y
 CONFIG_PACKAGE_kmod-mt7986-firmware=y
+# 卸载加速固件 (保留现状)
 CONFIG_PACKAGE_mt7986-wo-firmware=y
+
+# leds
+CONFIG_PACKAGE_libubox-lua=y
 
 
 # Mediatek 芯片
