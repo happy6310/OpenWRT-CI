@@ -87,7 +87,14 @@ jobs:
           echo "WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")" >> $GITHUB_ENV
           echo "WRT_MARK=${GITHUB_REPOSITORY%%/*}" >> $GITHUB_ENV
           echo "WRT_INFO=${WRT_SOURCE%%/*}" >> $GITHUB_ENV
-          echo "WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' ./Config/$WRT_CONFIG.txt)" >> $GITHUB_ENV
+          # 提取完整的平台信息，包括子平台
+          PLATFORM_LINE=$(grep -m 1 '^CONFIG_TARGET_' ./Config/$WRT_CONFIG.txt)
+          if [[ $PLATFORM_LINE =~ ^CONFIG_TARGET_([^_]+)_([^=]+)=y ]]; then
+            WRT_TARGET="${BASH_REMATCH[1]}/${BASH_REMATCH[2]}"
+          else
+            WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' ./Config/$WRT_CONFIG.txt)
+          fi
+          echo "WRT_TARGET=$WRT_TARGET" >> $GITHUB_ENV
           echo "WRT_WIFI=wifi-yes" >> $GITHUB_ENV
           echo "WRT_KVER=none" >> $GITHUB_ENV
           echo "WRT_LIST=none" >> $GITHUB_ENV

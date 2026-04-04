@@ -119,6 +119,7 @@ UPDATE_PACKAGE "luci-app-wolplus" "VIKINGYFY/packages" "main"
 # Athena LED
 # UPDATE_PACKAGE "luci-app-athena-led" "Sh1rokoDev/luci-app-athena-led" "LuCI2-JS"
 
+UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
 ####################
 
 
@@ -177,9 +178,12 @@ provided_config_lines=(
     "CONFIG_PACKAGE_luci-app-wolplus=y"
     ## luci-app-advancedplus
     #"CONFIG_PACKAGE_luci-app-advancedplus=y"
-    ## luci-app-advanced
+    ## luci-app-advanced 高级功能插件 (如果需要更强大的功能，可以考虑安装 luci-app-advanced)
     "CONFIG_PACKAGE_luci-app-advanced=y"
+    ## turboacc 插件 (如果需要 TCP 确认优化功能，可以考虑安装 luci-app-turboacc)
     "CONFIG_PACKAGE_luci-app-turboacc=y"
+    # tailscale 插件 (如果需要 tailscale 功能，可以考虑安装 luci-app-tailscale)
+    "CONFIG_PACKAGE_luci-app-tailscale=y"
 )
 
 
