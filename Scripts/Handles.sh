@@ -2,8 +2,14 @@
 
 PKG_PATH="$GITHUB_WORKSPACE/wrt/package/"
 
+# 辅助函数: 检查目录是否存在 (替代不可靠的 [ -d *"xxx"* ] glob 匹配)
+has_dir() {
+    local pattern="$1"
+    ls -d ./*"$pattern"* >/dev/null 2>&1
+}
+
 #预置HomeProxy数据
-if [ -d *"homeproxy"* ]; then
+if has_dir "homeproxy"; then
 	echo " "
 
 	HP_RULE="surge"
@@ -25,7 +31,7 @@ if [ -d *"homeproxy"* ]; then
 fi
 
 #修改argon主题字体和颜色
-if [ -d *"luci-theme-argon"* ]; then
+if has_dir "luci-theme-argon"; then
 	echo " "
 
 	cd ./luci-theme-argon/
@@ -36,7 +42,7 @@ if [ -d *"luci-theme-argon"* ]; then
 fi
 
 #修改aurora菜单式样
-if [ -d *"luci-app-aurora-config"* ]; then
+if has_dir "luci-app-aurora-config"; then
 	echo " "
 
 	cd ./luci-app-aurora-config/
@@ -97,7 +103,7 @@ if [ -f "$DM_FILE" ]; then
 fi
 
 #修复luci-app-netspeedtest相关问题
-if [ -d *"luci-app-netspeedtest"* ]; then
+if has_dir "luci-app-netspeedtest"; then
 	echo " "
 
 	cd ./luci-app-netspeedtest/
@@ -107,6 +113,3 @@ if [ -d *"luci-app-netspeedtest"* ]; then
 
 	cd $PKG_PATH && echo "netspeedtest has been fixed!"
 fi
-
-
-
